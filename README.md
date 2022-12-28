@@ -15,3 +15,5 @@
 
 ## Signature of the supervisor:
 ## Date: 28-12-2022
+
+[SPL1 Project Proposal Form 2022.docx](https://github.com/NusRAT-LiA/SPL-1/files/10312519/SPL1.Project.Proposal.Form.2022.docx)
