@@ -5,7 +5,9 @@
 ## Student’s Roll: 1306                               
 
 
-## Project Description: A Blockchain system created from scratch using C++ . The Blockchain will include all the properties of a mainstream blockchain featuring public key cryptography , hashing , transactions , block creation , proof-of-work implementation . The Key-technical implementations of my projects are -
+## Project Description:
+
+A Blockchain system created from scratch using C++ . The Blockchain will include all the properties of a mainstream blockchain featuring public key cryptography , hashing , transactions , block creation , proof-of-work implementation . The Key-technical implementations of my projects are -
 
      -> Hashing algorithms( SHA-256), which is used to generate a unique hash for each block based on its data and the previous block's hash.
 
@@ -22,4 +24,5 @@
 ## Signature of the supervisor:
 ## Date: 28-12-2022
 
-[SPL1 Project Proposal Form 2022.docx](https://github.com/NusRAT-LiA/SPL-1/files/10312519/SPL1.Project.Proposal.Form.2022.docx)
+[SPL1.Project.Proposal.Form.2022.docx](https://github.com/NusRAT-LiA/SPL-1/files/10327875/SPL1.Project.Proposal.Form.2022.docx)
+
