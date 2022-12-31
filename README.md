@@ -1,4 +1,4 @@
-# SPL-1
+# Blockchain in C++
 ## Student’s Name: Nusrat Jahan Lia
 
 
