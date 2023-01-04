@@ -17,12 +17,12 @@ A Blockchain system created from scratch using C++ . The Blockchain will include
 
 
 
-## Languages or Tools to be used: C++
+## Languages or Tools to be used: C++,C , Visual studio , Git , GitHub .
 
 ## Supervisor’s Name: Dr. Ahmedul Kabir
 
 ## Signature of the supervisor:
-## Date: 28-12-2022
+## Date: 04-01-2023
 
 [SPL1.Project.Proposal.Form.2022.docx](https://github.com/NusRAT-LiA/SPL-1/files/10327875/SPL1.Project.Proposal.Form.2022.docx)
 
