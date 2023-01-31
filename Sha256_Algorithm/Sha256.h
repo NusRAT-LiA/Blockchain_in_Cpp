@@ -1,6 +1,6 @@
-#include "sha256.cpp"
+#include "Sha256.cpp"
 #include<iostream>
 #include<cstring>
 using namespace std;
 
-string hash(string);
+string Hash(string);

@@ -100,7 +100,7 @@ string PreProcess(string input)
 }
 
 
-string hash(string input)
+string Hash(string input)
 {
-
+   return PreProcess(input);
 }
