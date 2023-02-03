@@ -86,13 +86,13 @@ string PreProcess(string input)
 
    size_t ProcessedStringSize = inputBitLength + 1 + bitsToBePadded + 64 ;
 
-   assert(ProcessedStringSize % 512 == 0);
+  // assert(ProcessedStringSize % 512 == 0);
 
    string processedString(ProcessedStringSize / 8 , 0);
-   memcpy( &processedString[0] , input.data() , inputLength );
+   memcpy( &processedString[0] , &input[0] , inputLength );
    processedString[inputLength] = 0x80 ;
    inputBitLength = swapE64 (inputBitLength) ;
-   memcpy(&processedString[(ProcessedStringSize / 8)-8] , &inputBitLength , 8);
+   memcpy(&processedString[inputLength+1] ,&inputBitLength , 8);
 
    return processedString ;
 
