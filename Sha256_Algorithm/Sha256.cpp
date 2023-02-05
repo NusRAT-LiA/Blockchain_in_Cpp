@@ -77,30 +77,111 @@ string hexOutput(void* buffer, size_t len)
     return hexString;
 }
 
-string PreProcess(string input)
-{
-   size_t inputLength = input.length();
-   uint64_t inputBitLength = inputLength * sizeof(char) * 8 ;
-   size_t  bitsToBePadded = ( 448 - inputLength - 1) % 512;
-   if(bitsToBePadded < 0) bitsToBePadded+=512;
-
-   size_t ProcessedStringSize = inputBitLength + 1 + bitsToBePadded + 64 ;
-
-  // assert(ProcessedStringSize % 512 == 0);
-
-   string processedString(ProcessedStringSize / 8 , 0);
-   memcpy( &processedString[0] , &input[0] , inputLength );
-   processedString[inputLength] = 0x80 ;
-   inputBitLength = swapE64 (inputBitLength) ;
-   memcpy(&processedString[inputLength+1] ,&inputBitLength , 8);
-
-   return processedString ;
-
-
-}
 
 
 string Hash(string input)
-{
-   return PreProcess(input);
+{   
+    const char* cstr = input.c_str();
+    size_t inpLength = input.length();
+
+    char* msg =  new char[inpLength+1];
+    memcpy(msg , cstr , inpLength+1);
+
+        uint32_t K[] = {
+        0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+        0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+        0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+        0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+        0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+        0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+        0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+        0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+    };
+
+    
+    uint32_t H[] = {
+        0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+    };
+
+    size_t len = strlen(msg);
+
+    
+    uint64_t l = len * sizeof(char) * 8;
+    size_t k = (448 - l - 1) % 512;
+    if(k < 0) k += 512;
+    assert((l+1+k) % 512 == 448);
+
+    size_t msgSize = l + 1 + k + 64;
+
+    char* msgPad = (char*)calloc((msgSize / 8), sizeof(char));
+   
+    memcpy(msgPad, msg, len);
+   
+    msgPad[len] = 0x80;
+ 
+    l = swapE64(l);
+    memcpy(msgPad+(msgSize/8)-8, &l, 8);
+ 
+
+    
+    size_t N = msgSize / 512;
+
+    
+    uint32_t v[8];
+    uint32_t W[64];
+    uint32_t* M = (uint32_t*)msgPad;
+    uint32_t T1, T2;
+
+    for(size_t i = 0; i < N * 16; i++) {
+        M[i] = swapE32(M[i]);
+    }
+  
+  
+    for(size_t i = 0; i < N; i++) {
+        // 1
+        for(size_t t = 0; t < 16; t++) {
+            W[t] = M[i*16 + t];
+           
+        }
+        for(size_t t = 16; t < 64; t++) {
+            W[t] = Sigma1(W[t-2]) + W[t-7] + Sigma0(W[t-15]) + W[t-16];
+        }
+
+        // 2
+        for(size_t t = 0; t < 8; t++) {
+            v[t] = H[t];
+        }
+
+        // 3
+        for(size_t t = 0; t < 64; t++) {
+            // a=0 b=1 c=2 d=3 e=4 f=5 g=6 h=7
+            T1 = v[7] + Epsilon1(v[4]) + Choice(v[4], v[5], v[6]) + K[t] + W[t];
+            T2 = Epsilon0(v[0]) + Majority(v[0], v[1], v[2]);
+
+            v[7] = v[6];
+            v[6] = v[5];
+            v[5] = v[4];
+            v[4] = v[3] + T1;
+            v[3] = v[2];
+            v[2] = v[1];
+            v[1] = v[0];
+            v[0] = T1 + T2;
+        }
+
+        for(size_t t = 0; t < 8; t++) {
+            H[t] += v[t];
+        }
+
+
+    }
+    
+    string hash="";
+
+        for(size_t i = 0; i < 8; i++) {
+        H[i] = swapE32(H[i]);
+        hash += hexOutput(&H[i], 4);
+    }
+
+return hash;
+
 }
