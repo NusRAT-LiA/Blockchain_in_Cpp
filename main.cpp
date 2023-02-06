@@ -3,6 +3,8 @@
 using namespace std;
 
 int main()
-{   
-    cout<<Hash("hjgvfguih")<<endl;
+{  
+    cout<<"\n The hash -\n ";
+    cout<<Hash("Nursat jahan Lia")<<endl;
+    
 }
