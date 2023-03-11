@@ -8,43 +8,10 @@ class Point
            long long int y;
 
 
-        int modular_inverse(int a, int m) {
-                int m0 = m;
-                int y = 0, x = 1;
- 
-                  if (m == 1)
-                       return 0;
- 
-                  while (a > 1) {
-                      int q = a / m;
-                      int t = m;
-                      m = a % m, a = t;
-                       t = y;
-                       y = x - q * y;
-                       x = t;
-                    }
- 
-                   if (x < 0)
-                        x += m0;
-  
-           return x;
-        }       
-
-
-        int gcdExtended(int a, int b, int &x, int &y) {
-          if (a == 0) {
-            x = 0;
-            y = 1;
-          return b;
-        }
-        int x1, y1;
-        int gcd = gcdExtended(b % a, a, x1, y1);
-        x = y1 - (b / a) * x1;
-        y = x1;
-       return gcd;
-      }
-
+        
+      
     public :
+
 
         Point(long long int a , long long int b)
         {
@@ -67,27 +34,91 @@ class Point
             this->x=a;
         }
 
+
         void setY(long long int b)
         {
-            this->y=b;
+            this->y=b;}
+
+            static   long long int gcdExtended(long long int a, long long int b , long long int* x, long long int* y)
+           {
+                if (a == 0) 
+                {
+                 *x = 0, *y = 1;
+                 return b;
+                }   
+
+                long long int x1, y1;
+                long long int gcd=gcdExtended(b%a , a, &x1 , &y1);
+                *x = y1 - (b / a) * x1;
+                *y = x1;
+    
+                return gcd;        
+
+           } 
+
+        static   long long int modInverse(long long int A , long long int M)
+           {
+              long long int x , y ;
+              long long int g = gcdExtended(A,M,&x,&y);
+              
+              long long int result = ((x%M)+M)%M;
+              return result ;
+           }
+        
+       static  Point pointDoubling(Point A , Point B ,long long int rangeConst, long long int a)
+        {
+          long long  int x3 ,y3;
+
+          long  long int numerator = 3*A.x*A.x +a ;
+          long  long int denominator = 2*A.y;
+
+          denominator=modInverse(denominator,rangeConst);
+          long long int slope = (numerator*denominator)%rangeConst;
+
+          x3=(slope*slope - A.x -B.x)%rangeConst;
+          y3=(slope*(A.x -x3)-A.y)%rangeConst;
+
+          Point result(x3,y3);
+
+          return result ;
+
+
         }
-        Point pointDoubling(Point p1, long long int a, long long int p) {
-         Point result(0, 0);
 
-         long long int numerator = (3 * p1.getX() * p1.getX() + a) % p;
-         long long int denominator = (2 * p1.getY()) % p;
+      static  Point pointAddition(Point A , Point B , long long int rangeConst, long long int a)
+        {
+               long long int slope , yIntercept;
+               long long int x3 , y3 ;
 
-         denominator = gcdExtended(denominator, p);
-         
-         long long int slope = (numerator * denominator) % p;
-    result.setX((slope * slope - 2 * p1.getX() + p) % p);
-    result.setY((slope * (p1.getX() - result.getX()) - p1.getY() + p) % p);
-    return result;
-}
+               if(A.x==B.x && A.y==B.y)
+               {
+                 Point result(0,0) ;
+                 result = pointDoubling(A,B,rangeConst,a);
+                 return result ;
+               }
 
-      
+               long long int numerator = B.y - A.y;
+               long long int denominator = B.x - A.x;
+               if(numerator < 0)
+                {
+                    numerator= (-numerator);
+                    denominator = ( - denominator);
 
+                }
+
+                denominator=modInverse(denominator,rangeConst);
+                slope = (numerator*denominator)%rangeConst;
+                x3=(slope*slope - A.x -B.x)%rangeConst;
+                y3=(slope*(A.x -x3)-A.y)%rangeConst;
+
+                 Point result(x3,y3);
+  
+                  return result ;
+
+        }    
                                        
 
 
 };
+
+
