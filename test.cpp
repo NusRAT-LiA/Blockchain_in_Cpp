@@ -1,34 +1,26 @@
-// C++ program to find multiplicative modulo
-// inverse using Extended Euclid algorithm.
-#include <bits/stdc++.h>
-using namespace std;
+#include<bits/stdc++.h>
+using namespace std ;
+// Function to convert an integer to a binary string
+string toBinaryString(int n) {
+    if (n == 0) {
+        return "0"; // Special case for 0
+    }
 
-long long int gcdExtended(long long int a, long long int b , long long int* x, long long int* y)
-           {
-                if (a == 0) 
-                {
-                 *x = 0, *y = 1;
-                 return b;
-                }   
+    string binary = ""; // Initialize an empty string to hold the binary digits
 
-                long long int x1, y1;
-                long long int gcd=gcdExtended(b%a , a, &x1 , &y1);
-                *x = y1 - (b / a) * x1;
-                *y = x1;
-    
-                return gcd;        
+    while (n > 0) {
+        int bit = n % 2; // Extract the least significant bit
+        binary = to_string(bit) + binary; // Prepend the bit to the binary string
+        n /= 2; // Shift the integer right by 1 bit
+    }
 
-           } 
+    return binary; // Return the binary string
+}
 
-           long long int modInverse(long long int A , long long int M)
-           {
-              long long int x , y ;
-              long long int g = gcdExtended(A,M,&x,&y);
-              
-              long long int result = ((x%M)+M)%M;
-              return result ;
-           }
-      int main()
-      {
-         cout<<modInverse(3,11);
-      }
+
+int main()
+{
+   long long int m=10;
+   cout<<toBinaryString(m);
+   
+}

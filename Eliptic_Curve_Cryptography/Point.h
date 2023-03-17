@@ -37,9 +37,26 @@ class Point
 
         void setY(long long int b)
         {
-            this->y=b;}
+            this->y=b;
+        }
 
-            static   long long int gcdExtended(long long int a, long long int b , long long int* x, long long int* y)
+        // Function to convert an integer to a binary string
+        static string toBinaryString(int n) {
+         if (n == 0) { return "0"; }// Special case for 0 
+
+        string binary = ""; // Initialize an empty string to hold the binary digits
+
+        while (n > 0) {
+        int bit = n % 2; // Extract the least significant bit
+        binary = to_string(bit) + binary; // Prepend the bit to the binary string
+        n /= 2; // Shift the integer right by 1 bit
+        }
+
+         return binary; // Return the binary string
+        }
+
+
+         static   long long int gcdExtended(long long int a, long long int b , long long int* x, long long int* y)
            {
                 if (a == 0) 
                 {
@@ -65,7 +82,7 @@ class Point
               return result ;
            }
         
-       static  Point pointDoubling(Point A , Point B ,long long int rangeConst, long long int a)
+       static  Point pointDoubling(Point A ,long long int rangeConst, long long int a)
         {
           long long  int x3 ,y3;
 
@@ -75,7 +92,7 @@ class Point
           denominator=modInverse(denominator,rangeConst);
           long long int slope = (numerator*denominator)%rangeConst;
 
-          x3=(slope*slope - A.x -B.x)%rangeConst;
+          x3=(slope*slope - A.x - A.x)%rangeConst;
           y3=(slope*(A.x -x3)-A.y)%rangeConst;
 
           Point result(x3,y3);
@@ -93,7 +110,7 @@ class Point
                if(A.x==B.x && A.y==B.y)
                {
                  Point result(0,0) ;
-                 result = pointDoubling(A,B,rangeConst,a);
+                 result = pointDoubling(A,rangeConst,a);
                  return result ;
                }
 
@@ -115,7 +132,27 @@ class Point
   
                   return result ;
 
-        }    
+        }   
+
+        static Point pointMultiplication(Point P , long long int m , long long int rangeConstant , long long int a)
+        {
+                Point n = P;
+                Point result(0, 0);
+                string binaryM =toBinaryString(m);
+                int i = binaryM.length()-1;
+
+                while (i >=0)
+                 {
+                    if (binaryM[i] == '1')
+                   {
+                     if (result.getX() == 0 && result.getY() == 0) { result = n;  }
+                     else{ result =pointAddition(result , n , rangeConstant , a);}
+                   }
+                   n = pointDoubling(n,rangeConstant,a);
+                   i--;
+                  }
+               return result;
+       }  
                                        
 
 
