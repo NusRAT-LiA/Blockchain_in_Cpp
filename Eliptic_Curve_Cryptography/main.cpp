@@ -10,6 +10,6 @@ int main()
     Point B(7,80);
     
     
-   Point res=Point::pointMultiplication(A,16,10000,3);
+   Point res=Point ::messageEncoding(7030,59999999,45,600);
     cout<<res.getX()<<" "<<res.getY();
 }

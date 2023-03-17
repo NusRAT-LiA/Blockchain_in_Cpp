@@ -106,7 +106,7 @@ class Point
    
 
         static pair<long long int, long long int> TonelliShanks(long long int n, long long int p) {
-         if(!is_prime(p)) return {-1,-1};
+         if(!is_prime(p)) {cout<<"p";return {-1,-1};}
         long long int x1 = p - 1;
         long long int expTemp = x1 / 2;
         long long int temp = pow_mod(n, expTemp, p);
@@ -241,6 +241,28 @@ class Point
                   }
                return result;
        }  
+
+
+static Point messageEncoding(long long int m,long long int rangeConstant, long long  int b , long long int c) {
+    long long int  K = 10;
+    long long int maxMessageSize = (rangeConstant - K) / K;
+    if (m > maxMessageSize)
+        return Point(-1, -1);
+    long long int m1 = m + 1;
+    if (m1 * K < rangeConstant) {
+        long long int j = 0;
+        while (j < K) {
+            long long int x = m * K + j;
+            long long int y2 = (pow_mod(x, 3, rangeConstant) + b * x + c) % rangeConstant;
+            pair<long long int, long long int> roots = TonelliShanks(y2, rangeConstant);
+            if (roots.first != -1 && roots.second != -1)
+                return Point(x, min(roots.first, roots.second));
+            j++;
+        }
+    }
+    return Point(-1, -1);
+}
+
                                        
 
 
