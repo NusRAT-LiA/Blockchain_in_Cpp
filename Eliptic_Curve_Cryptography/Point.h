@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<cmath>
 using namespace std;
 
 class Point
@@ -81,6 +82,93 @@ class Point
               long long int result = ((x%M)+M)%M;
               return result ;
            }
+
+
+        static  long long int pow_mod(long long int x, long long int n, long long int p) {
+              if (n == 0) return 1;
+              if (n & 1)
+              return (pow_mod(x, n-1, p) * x) % p;
+              x = pow_mod(x, n/2, p);
+              return (x * x) % p;
+            }
+
+         static bool is_prime(int p) {
+                   if (p < 2) {
+                        return false;
+                    }
+                   for (int i = 2; i * i <= p; i++) {
+                   if (p % i == 0) {
+                   return false;
+                   }
+                  }
+                  return true;
+               }
+   
+
+        static pair<long long int, long long int> TonelliShanks(long long int n, long long int p) {
+         if(!is_prime(p)) return {-1,-1};
+        long long int x1 = p - 1;
+        long long int expTemp = x1 / 2;
+        long long int temp = pow_mod(n, expTemp, p);
+     
+         // Check if n is a quadratic residue mod p
+          if (temp != 1) {
+          return {-1, -1};
+          }
+    
+         long long int q = x1;
+         int counter = 0;
+         while (q % 2 == 0) {
+          q = q / 2;
+          counter++;
+         }
+    
+        if (counter == 1) {
+        long long int r1 = pow_mod(n, (p + 1) / 4, p);
+        long long int r2 = p - r1;
+        return {r1, r2};
+         }
+    
+        long long int z = 2;
+        temp = pow_mod(z, x1 / 2, p);
+        while (temp != x1) {
+        z++;
+        temp = pow_mod(z, x1 / 2, p);
+        }
+    
+        long long int c = pow_mod(z, q, p);
+        long long int r = pow_mod(n, (q + 1) / 2, p);
+        long long int t = pow_mod(n, q, p);
+        int m = counter;
+    
+       while (true) {
+        if (t == 1) {
+            long long int r2 = p - 1;
+            return {r, r2};
+        }
+        
+        int i = 0;
+        long long int zz = t;
+        while (zz != 1 && i < (m - 1)) {
+            zz = pow_mod(t, pow(2, i), p);
+            i++;
+        }
+        
+        long long int b = pow_mod(c, pow(2, m - i - 1), p);
+        r = (r * b) % p;
+        t = (t * pow_mod(b, 2, p)) % p;
+        c = pow_mod(b, 2, p);
+        m = i;
+    }
+
+    return {-1,-1};
+  }
+
+
+
+
+               
+ 
         
        static  Point pointDoubling(Point A ,long long int rangeConst, long long int a)
         {
