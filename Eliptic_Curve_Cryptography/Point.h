@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include<cmath>
+
 using namespace std;
 
 class Point
@@ -12,7 +12,8 @@ class Point
         
       
     public :
-
+        
+        Point(){this->x=0;this->y=0;}
 
         Point(long long int a , long long int b)
         {
@@ -243,7 +244,7 @@ class Point
        }  
 
 
-static Point messageEncoding(long long int m,long long int rangeConstant, long long  int b , long long int c) {
+static Point messageEncoding(long long int m,long long int rangeConstant, long long  int a , long long int b) {
     long long int  K = 10;
     long long int maxMessageSize = (rangeConstant - K) / K;
     if (m > maxMessageSize)
@@ -253,7 +254,7 @@ static Point messageEncoding(long long int m,long long int rangeConstant, long l
         long long int j = 0;
         while (j < K) {
             long long int x = m * K + j;
-            long long int y2 = (pow_mod(x, 3, rangeConstant) + b * x + c) % rangeConstant;
+            long long int y2 = (pow_mod(x, 3, rangeConstant) + a * x + b) % rangeConstant;
             pair<long long int, long long int> roots = TonelliShanks(y2, rangeConstant);
             if (roots.first != -1 && roots.second != -1)
                 return Point(x, min(roots.first, roots.second));

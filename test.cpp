@@ -20,7 +20,12 @@ string toBinaryString(int n) {
 
 int main()
 {
-   long long int m=10;
-   cout<<toBinaryString(m);
-   
+   string s = "abc";
+   long long int rep[5];
+   for(int i =0 ;i <s.size();i++)
+   {
+      rep[i]=s[i];
+      cout<<rep[i]<<endl;
+   }
+
 }
