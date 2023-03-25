@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
-
+#ifndef POINT_H
+#define POINT_H
 using namespace std;
 
 class Point
@@ -267,6 +268,9 @@ static Point messageEncoding(long long int m,long long int rangeConstant, long l
                                        
 
 
+
 };
+
+#endif
 
 

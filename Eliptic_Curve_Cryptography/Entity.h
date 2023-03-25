@@ -1,4 +1,6 @@
 #include<bits/stdc++.h>
+#ifndef ENTITY_H
+#define ENTITY_H
 #include"Point.h"
 #include"ElipticCurve.h"
 using namespace std;
@@ -7,13 +9,13 @@ class Entity{
      
      private :
         
-        char EntityName;              // Entity name
+        string EntityName;            // Entity name
         long long int PrivateKey;     // Entity's private key   
         Point SecretKey;              // Shared secret key
         string Message;               // Message to be encoded and encrypted
         long long int *MsgAscii;      // Array to store the ASCII values of message characters 
         long long int MsgSize;        // size of the Message  
-        ElipticCurve ElipticCurv;    // Eliptical cirve used to generate keys
+        ElipticCurve ElipticCurv;     // Eliptical curve used to generate keys
         Point *Encoded ;              // Array to store encoded message points
 
     public :
@@ -21,12 +23,21 @@ class Entity{
         Point PublicKey;              // Entity's public key
 
         // Constructor to initialize Entity object with entity name and message
-        Entity(char EN, string Msg)
+        // Entity(string EN, string Msg)
+        // {
+        //     EntityName = EN;
+        //     PrivateKey = 0;
+        //     Message = Msg;
+        // }
+
+        Entity(string EN , ElipticCurve EC)
         {
-            EntityName = EN;
-            PrivateKey = 0;
-            Message = Msg;
+            EntityName=EN;
+            PrivateKey=0;
+            ElipticCurv=EC;
         }
+
+        
 
         // Function to convert message characters to ASCII values and store them in MsgAscii array
         void StringToAscii()
@@ -54,10 +65,16 @@ class Entity{
         }
 
         // Function to generate entity's private and public keys
-        void KeyGeneration(ElipticCurve E, Point G)
+        void PrivateKeyGeneration()
         {
-            ElipticCurv = E;
+            
             PrivateKey = rand() % ElipticCurv.GetRangeC() + 2;
+            cout<<"You only get to see your Private Key  once !!  : "<<PrivateKey<<endl;
+           // PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
+        }
+
+        void PublicKeyGeneration( Point G)
+        {
             PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
         }
 
@@ -66,8 +83,7 @@ class Entity{
         {
             Encoded = new Point[MsgSize];
             ElipticCurv = E;
-            for (int i = 0; i < MsgSize; i++)
-            {
+            for (int i = 0; i < MsgSize; i++){
               Point P = Point::messageEncoding(Message[i],ElipticCurv.GetRangeC(),ElipticCurv.GetA(),ElipticCurv.GetB());
               Encoded[i]=P;
             }
@@ -80,12 +96,12 @@ class Entity{
         }
 
         // Function to print entity's private and public keys, as well as the shared secret key
-        void PrintKeys(string Name)
+
+        long long int findRangeC(long long int K)
         {
-            cout << "\n\t\t ****" << Name << ": Keys*****";
-            cout << "\nPrivateKey= " << PrivateKey << endl << "PubkeyA= R( " << PublicKey.getX() << "," << PublicKey.getY() << ")\n";
-
+            return (MsgAscii[0]*K+1);
         }
-
+        
        
 };
+#endif

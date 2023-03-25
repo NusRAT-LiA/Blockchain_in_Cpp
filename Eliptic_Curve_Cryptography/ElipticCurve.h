@@ -1,4 +1,6 @@
 #include<bits/stdc++.h>
+#ifndef ELIPTIC_CURVE_H
+#define ELIPTIC_CURVE_H
 using namespace std ;
 
 
@@ -42,3 +44,4 @@ class ElipticCurve{
            }
 
 };
+#endif
