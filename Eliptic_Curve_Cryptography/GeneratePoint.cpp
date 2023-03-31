@@ -10,7 +10,7 @@ ElipticCurve EC;
 
 bool Is_Prime(int n)
 {
-    for (int i=2;i<n;i++) 
+    for (int i=2;i<=n;i++) 
     {
 	
         if (n % i == 0)
@@ -37,16 +37,16 @@ bool Is_Prime(int n)
  {
     long long int  a=1009 , b = 20056;
 
-    srand(time(NULL));
+    // srand(time(NULL));
 
     
-    long long int RangeConst =rand() ;
+    // long long int RangeConst =rand() ;
 
-    while(!Is_Prime(RangeConst))
-    {
-        RangeConst++;
-    }
-    
+    // while(!Is_Prime(RangeConst))
+    // {
+    //     RangeConst++;
+    // }
+    long long int RangeConst = 559799 ;
     EC= ElipticCurve(a , b , RangeConst);
 
  }
