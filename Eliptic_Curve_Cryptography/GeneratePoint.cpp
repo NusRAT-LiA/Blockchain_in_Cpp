@@ -5,7 +5,7 @@
 
 using namespace std;
 
-ElipticCurve EC;
+//ElipticCurve EC;
 //Entity newEntity;
 
 bool Is_Prime(int n)
@@ -33,7 +33,7 @@ bool Is_Prime(int n)
  	return G;
  }
 
- void CreateCurve()
+ ElipticCurve CreateCurve()
  {
     long long int  a=1009 , b = 20056;
 
@@ -47,14 +47,14 @@ bool Is_Prime(int n)
     //     RangeConst++;
     // }
     long long int RangeConst = 559799 ;
-    EC= ElipticCurve(a , b , RangeConst);
-
+    ElipticCurve EC= ElipticCurve(a , b , RangeConst);
+   return EC;
  }
 
-pair<long long int , long long int >  generateKey(string Name)
-{  cout<<"Executing"<<endl;
-   CreateCurve();
-   Entity newEntity(Name,EC);
+pair<long long int , long long int >  generateKey(Entity newEntity,ElipticCurve EC)
+{  //cout<<"Executing"<<endl;
+   //EC=CreateCurve();
+  // Entity newEntity(Name,EC);
    Point G = GeneratePointG(newEntity,EC);
    srand(time(NULL));
    newEntity.PrivateKeyGeneration();

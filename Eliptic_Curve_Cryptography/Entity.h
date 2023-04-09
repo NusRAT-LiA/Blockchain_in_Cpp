@@ -3,6 +3,7 @@
 #define ENTITY_H
 #include"Point.h"
 #include"ElipticCurve.h"
+//#include"../Sha256_Algorithm/Sha256.h"
 using namespace std;
 
 class Entity{
@@ -37,7 +38,7 @@ class Entity{
             ElipticCurv=EC;
         }
 
-        
+        Entity(){} 
 
         // Function to convert message characters to ASCII values and store them in MsgAscii array
         void StringToAscii()
@@ -95,12 +96,17 @@ class Entity{
             SecretKey=Point :: pointMultiplication(PubKey,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
         }
 
-        // Function to print entity's private and public keys, as well as the shared secret key
-
-        long long int findRangeC(long long int K)
+        bool isEnityValid(long long int PrivKey)
         {
-            return (MsgAscii[0]*K+1);
+           if(this->PrivateKey==PrivKey)return true;
+           return false;
         }
+
+        // string EntityAdress()
+        // {
+        //     string addressString=to_string(this->PublicKey.getX())+to_string(this->PublicKey.getY())+this->EntityName+to_string(this->PrivateKey);
+        //     return Hash(addressString);
+        // }
         
        
 };

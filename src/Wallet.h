@@ -16,7 +16,40 @@ class Wallet{
 
     public :
        Entity WalletOwner;
+       string WalletAdress;
 
+       Wallet(string name)
+       {
+         //result=generateKey(name);
+         ElipticCurve EC=CreateCurve();
+         Entity WalletOwner=Entity(name,EC);
+         
+         pair<long long int , long long int > WalletPublicKey ;
+
+         WalletPublicKey=generateKey(WalletOwner,EC);
+
+         WalletAdress=WalletOwner.EntityAdress();
+         }
+      
+      bool isPrivKeyValid(long long int SecretKey)
+      {
+         return this->WalletOwner.isEnityValid(SecretKey);
+      }
+
+      bool isBalanceValid(int TransactionAmount)
+      {
+         return this->Balance>=TransactionAmount;
+      }
+
+      void addBalance(int amount)
+      {
+         this->Balance+=amount;
+      }
+
+      void removeBalance(int amount)
+      {
+         this->Balance-=amount;
+      }
 
 };
 
