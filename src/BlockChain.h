@@ -42,16 +42,22 @@ public:
     }
 
     void mineBlock(Miner miner)
-    {
+    { 
+      bool isInvalidTxDetected=false;  
+
       Block Newblock = miner.createBlock(pendingTransactions,blocks.back().hash,this->difficulty);
       this->pendingTransactions.clear();
       Newblock.index=this->blocks.size();
-      if(!miner.verifyTransactions(Newblock,this->KeyMap))return;
+      if(!miner.verifyTransactions(Newblock,this->KeyMap)){isInvalidTxDetected=true;}
       miner.mineBlock(Newblock);
       this->blocks.push_back(Newblock);
 
     }
-
+    
+    void addBlock()
+    {
+        
+    }
     
 };
 

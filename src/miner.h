@@ -5,6 +5,7 @@
 #include "Transaction.h"
 #include "Block.h"
 #include "Wallet.h"
+#include "BlockChain.h"
 using namespace std;
 
 class Miner {
@@ -22,6 +23,7 @@ class Miner {
         return true;
     }
  public:
+ 
     Miner(int id);
     int getId(){return this->id;}
 
@@ -34,8 +36,8 @@ class Miner {
     bool verifyTransactions(Block block,map<pair<long long int , long long int> , Wallet > KeyMap){
       for(auto i : block.transactions)
       {
-        if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature)))return false;
-        if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent)) return false;
+        if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature))){block.transactions.remove(i); return false;}
+        if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent)){block.transactions.remove(i); return false;}
       }
 
       return true;
