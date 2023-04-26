@@ -5,6 +5,7 @@
 #include <list>
 #include <ctime>
 #include "Transaction.h"
+#include "../Sha256_Algorithm/Sha256.h"
 using namespace std;
 
 class Block {
@@ -53,6 +54,11 @@ public:
     int index;
     int difficulty;
     string merkleRoot;
+
+    Block()
+    {
+        
+    }
 
     Block(list<Transaction> transactions, string previousHash, int difficulty){
         

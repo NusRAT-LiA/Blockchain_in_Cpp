@@ -6,6 +6,7 @@
 #include "Block.h"
 #include "Wallet.h"
 #include "BlockChain.h"
+#include "../Sha256_Algorithm/Sha256.h"
 using namespace std;
 
 class Miner {
@@ -58,6 +59,7 @@ class Miner {
          string timestr=to_string(time);
          string Blockhash=block.calculateHash();
          string CandidateHash=Hash(Blockhash+noncestr+timestr);
+         
 
          if(validateNonce(CandidateHash,block.difficulty))
          { 

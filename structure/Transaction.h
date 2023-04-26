@@ -2,7 +2,7 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-#include "Transactions.h" // include header file for Transactions class
+
 #include "../Sha256_Algorithm/Sha256.h" // include header file for SHA256 hash function
 
 using namespace std;
@@ -18,7 +18,10 @@ class Transaction
         pair<long long int,long long int> PublicKeyOfRecieverWallet; // public key of the receiver's wallet
         long long int AmountSent; // amount of currency being sent
         long long int Signature; // digital signature of the transaction
-
+       
+        bool operator==(const Transaction& other) const {
+         return TxHash == other.TxHash;
+         }
         // constructor for Transaction class
         Transaction(pair<long long int,long long int> SenderKey, pair<long long int,long long int> RecieverKey, int Amount, long long int Sign)
         {

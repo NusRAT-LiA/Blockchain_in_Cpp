@@ -14,14 +14,19 @@ class Blockchain {
 private:
     list<Block> blocks;
     int difficulty;
-    // float miningReward;
+    int miningReward;
     list<Transaction> pendingTransactions;
     list<Wallet> Wallets;
     map<pair<long long int , long long int> , Wallet > KeyMap;
     Block genesisBlock;
 
 public:
-    Blockchain(int difficulty, float miningReward);
+    string chainName;
+    Blockchain(int difficulty, string Name)
+    {
+        this->difficulty=difficulty;
+        this->chainName=Name;
+    }
     void createGenesisBlock();
     Block& getLatestBlock();
     void minePendingTransactions();
@@ -29,7 +34,7 @@ public:
 
     void addWallet(string Name)
     {
-        Wallet NewWallet=Wallet(Name);
+        Wallet NewWallet(Name);
         KeyMap[make_pair( NewWallet.WalletOwner.PublicKey.getX(),NewWallet.WalletOwner.PublicKey.getY())]=NewWallet;
         Wallets.push_back(NewWallet);
     }
