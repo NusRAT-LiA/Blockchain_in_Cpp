@@ -24,14 +24,13 @@ class Miner {
         return true;
     }
  public:
- 
-    Miner(int id);
+    Miner(){}
+    Miner(int id){this->id=id;}
     int getId(){return this->id;}
 
     Block createBlock(list<Transaction> transactions,string previousHash, int difficulty)
     {
        Block newBlock = Block(transactions,previousHash,difficulty);
-
        return newBlock;
     }
     bool verifyTransactions(Block block,map<pair<long long int , long long int> , Wallet > KeyMap){
@@ -44,10 +43,10 @@ class Miner {
       return true;
     }
 
-    void mineBlock(Block block)
+    Block mineBlock(Block block)
     { 
       int target=block.difficulty;
-      int nonce=0;
+      unsigned int nonce=0;
 
       while(true)
       {
@@ -66,7 +65,7 @@ class Miner {
           block.nonce=nonce;
           block.timestamp=time;
           block.hash=CandidateHash;
-          break;
+          return block;
          }
 
          nonce++;

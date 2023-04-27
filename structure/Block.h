@@ -61,7 +61,9 @@ public:
     }
 
     Block(list<Transaction> transactions, string previousHash, int difficulty){
-        
+        this->transactions=transactions;
+        this->previousHash=previousHash;
+        this->difficulty=difficulty;
     }
 
     string calculateHash(){

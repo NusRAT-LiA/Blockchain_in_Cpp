@@ -106,6 +106,7 @@ class Entity{
         {
             // string addressString=to_string(this->PublicKey.getX())+to_string(this->PublicKey.getY())+this->EntityName+to_string(this->PrivateKey);
             // return Hash(addressString);
+            return "";
         }
         
        
