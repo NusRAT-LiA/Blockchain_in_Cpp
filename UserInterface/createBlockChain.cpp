@@ -54,6 +54,8 @@ int main()
     Blockchain newChain(chainDifficulty,chainName);
     cout<<"\t\t\t\t"<<newChain.chainName<<" initiated !! "<<"\t\t\t\t"<<endl;sleep(2);
     newChain.createGenesisBlock();
+
+    cout<<" <---Genesis Block--->  "<<endl;
     printBlock(newChain.genesisBlock);
 
 
