@@ -3,7 +3,7 @@
 #define ENTITY_H
 #include"Point.h"
 #include"ElipticCurve.h"
-//#include"../Sha256_Algorithm/Sha256.h"
+#include"../Sha256_Algorithm/Sha256.h"
 using namespace std;
 
 class Entity{
@@ -70,7 +70,7 @@ class Entity{
         {
             
             PrivateKey = rand() % ElipticCurv.GetRangeC() + 2;
-            cout<<"You only get to see your Private Key  once !!  : "<<PrivateKey<<endl;
+            cout<<"Rremember"<<this->EntityName<<"'s  Private Key to verify transactions requested from this  wallet !!  : "<<PrivateKey<<endl;
            // PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
         }
 
@@ -104,9 +104,9 @@ class Entity{
 
         string EntityAdress()
         {
-            // string addressString=to_string(this->PublicKey.getX())+to_string(this->PublicKey.getY())+this->EntityName+to_string(this->PrivateKey);
-            // return Hash(addressString);
-            return "";
+            string addressString=to_string(this->PublicKey.getX())+to_string(this->PublicKey.getY())+this->EntityName+to_string(this->PrivateKey);
+            return Hash(addressString);
+        
         }
         
        

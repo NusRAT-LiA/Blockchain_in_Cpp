@@ -26,6 +26,8 @@ public:
     Block genesisBlock;
 
     string chainName;
+
+    Blockchain(){}
     Blockchain(int difficulty, string Name)
     {
         this->difficulty=difficulty;
@@ -36,11 +38,12 @@ public:
     void minePendingTransactions();
     float getBalanceOfAddress(std::string address);
 
-    void addWallet(string Name)
+    Wallet addWallet(string Name)
     {
         Wallet NewWallet(Name);
         this->KeyMap[make_pair( NewWallet.WalletOwner.PublicKey.getX(),NewWallet.WalletOwner.PublicKey.getY())]=NewWallet;
         this->Wallets.push_back(NewWallet);
+        return NewWallet;
     }
 
     void addTransaction(pair<long long int,long long int> SenderKey , pair<long long int,long long int> RecieverKey , int Amount, long long int Sign)

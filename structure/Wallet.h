@@ -18,7 +18,7 @@ class Wallet{
        Entity WalletOwner;
        string WalletAdress;
        
-       Wallet();
+       Wallet(){}
        Wallet(string name)
        {
          //result=generateKey(name);
@@ -30,7 +30,7 @@ class Wallet{
          WalletPublicKey=generateKey(WalletOwner,EC);
 
          WalletAdress=WalletOwner.EntityAdress();
-         }
+       }
       
       bool isPrivKeyValid(long long int SecretKey)
       {
@@ -51,7 +51,7 @@ class Wallet{
       {
          this->Balance-=amount;
       }
-
+      
 };
 
 #endif
