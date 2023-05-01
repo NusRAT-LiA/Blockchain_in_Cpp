@@ -35,8 +35,8 @@ void printBlock(Block block)
 void addWallet(string name)
 {
    Wallet newWallet = myChain.addWallet(name);
-   cout<<newWallet.WalletAdress<<" created!"<<endl;
-   cout<<"Public Key of "<<newWallet.WalletAdress<<"is"<<newWallet.WalletOwner.PublicKey.getX()<<" "<<newWallet.WalletOwner.PublicKey.getY()<<endl;
+   cout<<"Account address : "<<newWallet.WalletAdress<<" created!"<<endl;
+   cout<<"Public Key is  : "<<newWallet.WalletOwner.PublicKey.getX()<<" "<<newWallet.WalletOwner.PublicKey.getY()<<endl;
 
 }
 
@@ -81,7 +81,7 @@ int main()
        cin >>newUserName;
 
        if(newUserName=="n/a"){
-        if(userCount<2){cout<<"You must add atleast two users"<<endl;sleep(1);}
+        if(userCount<2){cout<<"You must add atleast two users"<<endl;sleep(1);continue;}
         else {addUser=false;}
        }
        addWallet(newUserName);

@@ -40,7 +40,7 @@ public:
 
     Wallet addWallet(string Name)
     {
-        Wallet NewWallet(Name);
+        Wallet NewWallet=Wallet(Name);
         this->KeyMap[make_pair( NewWallet.WalletOwner.PublicKey.getX(),NewWallet.WalletOwner.PublicKey.getY())]=NewWallet;
         this->Wallets.push_back(NewWallet);
         return NewWallet;

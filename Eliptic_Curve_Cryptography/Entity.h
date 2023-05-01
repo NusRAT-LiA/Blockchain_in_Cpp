@@ -11,7 +11,7 @@ class Entity{
      private :
         
         string EntityName;            // Entity name
-        long long int PrivateKey;     // Entity's private key   
+       long long int PrivateKey;     // Entity's private key   
         Point SecretKey;              // Shared secret key
         string Message;               // Message to be encoded and encrypted
         long long int *MsgAscii;      // Array to store the ASCII values of message characters 
@@ -70,13 +70,13 @@ class Entity{
         {
             
             PrivateKey = rand() % ElipticCurv.GetRangeC() + 2;
-            cout<<"Rremember"<<this->EntityName<<"'s  Private Key to verify transactions requested from this  wallet !!  : "<<PrivateKey<<endl;
+            cout<<"Rremember "<<this->EntityName<<"'s  Private Key to verify transactions requested from this  wallet !!  : "<<PrivateKey<<endl;
            // PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
         }
 
         void PublicKeyGeneration( Point G)
         {
-            PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
+            this->PublicKey=Point :: pointMultiplication(G,PrivateKey, ElipticCurv.GetRangeC(), ElipticCurv.GetA());
         }
 
         // Function to encode message into points on elliptical curve

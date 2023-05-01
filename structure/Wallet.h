@@ -27,9 +27,10 @@ class Wallet{
          
          pair<long long int , long long int > WalletPublicKey ;
 
-         WalletPublicKey=generateKey(WalletOwner,EC);
+         this->WalletOwner=generateKey(WalletOwner,EC);
 
          WalletAdress=WalletOwner.EntityAdress();
+
        }
       
       bool isPrivKeyValid(long long int SecretKey)
