@@ -13,7 +13,6 @@ class Miner {
     
  private:
        int id;
-       int minerBalance;
 
        bool validateNonce(string hash, int target) {
         for(int i = 0; i < target; i++) {
@@ -24,8 +23,9 @@ class Miner {
         return true;
     }
  public:
+    int minerBalance;
     Miner(){}
-    Miner(int id){this->id=id;}
+    Miner(int id){this->id=id;this->minerBalance=0;}
     int getId(){return this->id;}
 
     Block createBlock(list<Transaction> transactions,string previousHash, int difficulty)
@@ -38,6 +38,7 @@ class Miner {
       {
         if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature))){block.transactions.remove(i); return false;}
         if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent)){block.transactions.remove(i); return false;}
+
       }
 
       return true;

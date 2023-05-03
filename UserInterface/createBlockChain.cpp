@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include"../structure/Block.h"
 #include"../structure/Wallet.h"
+#include"../structure/Transaction.h"
 using namespace std ;
 Blockchain myChain=Blockchain();
 void printBlock(Block block)
@@ -40,6 +41,46 @@ void addWallet(string name)
 
 }
 
+void addTransaction()
+{
+   pair<long long , long long> SenderPublicKey , RecieverPublicKey;
+   int AmountToBeSent;
+   long long   SenderPrivateKey;
+   int TxFee;
+
+   cout<<"Sender Public Key   : ";
+   cin>>SenderPublicKey.first>>SenderPublicKey.second;
+   cout<<"\n";
+   cout<<"Reciever Public Key : ";
+   cin>>RecieverPublicKey.first>>RecieverPublicKey.second;
+   cout<<"\n";
+   cout<<"Amount to be sent   : ";
+   cin>>AmountToBeSent;
+   cout<<"\n";
+   cout<<"Private Key of the Sender will work as the Digital Signature of a Transaction"<<endl;sleep(1);
+   cout<<"Digital Signature   : ";
+   cin>>SenderPrivateKey;
+   cout<<"Offered Transaction fee : ";
+   cin>>TxFee;
+
+   myChain.addTransaction(SenderPublicKey,RecieverPublicKey,AmountToBeSent,SenderPrivateKey,TxFee);
+  
+}
+
+void addMiner()
+{  
+   int numOfMiners;
+   cout<<"How many miners do you want to add ?"<<endl;
+   cin>>numOfMiners;
+   while (numOfMiners)
+   {
+     myChain.addMiner(numOfMiners);
+     numOfMiners--;
+   }
+   
+
+}
+
 int main()
 {   
     string chainName;
@@ -74,19 +115,21 @@ int main()
     // cout<<"Private Key : A secret code used to access and manage the funds stored in wallet."<<endl;sleep(2);
     // cout<<"Public Key  : Derived from the private key using complex Cryptographic function \n\t\t that Represants a wallet in open transactions in blockchain without revealing sensitive information about wallet"<<endl;sleep(3);
 
-    while(addUser)
-    {  
-       string newUserName;
-      // cout<<"Enter UserName(type \"n/a\" if you want stop adding users) : ";
-       cin >>newUserName;
+    // while(addUser)
+    // {  
+    //    string newUserName;
+    //   // cout<<"Enter UserName(type \"n/a\" if you want stop adding users) : ";
+    //    cin >>newUserName;
 
-       if(newUserName=="n/a"){
-        if(userCount<2){cout<<"You must add atleast two users"<<endl;sleep(1);continue;}
-        else {addUser=false;}
-       }
-       addWallet(newUserName);
-       userCount++;
-    }
+    //    if(newUserName=="n/a"){
+    //     if(userCount<2){cout<<"You must add atleast two users"<<endl;sleep(1);continue;}
+    //     else {addUser=false;}
+    //    }
+    //    addWallet(newUserName);
+    //    userCount++;
+    // }
+
+    // addTransaction();
 
     
 

@@ -18,12 +18,15 @@ class Transaction
         pair<long long int,long long int> PublicKeyOfRecieverWallet; // public key of the receiver's wallet
         long long int AmountSent; // amount of currency being sent
         long long int Signature; // digital signature of the transaction
-       
+        int TxFee;
+
         bool operator==(const Transaction& other) const {
          return TxHash == other.TxHash;
          }
+   
+
         // constructor for Transaction class
-        Transaction(pair<long long int,long long int> SenderKey, pair<long long int,long long int> RecieverKey, int Amount, long long int Sign)
+        Transaction(pair<long long int,long long int> SenderKey, pair<long long int,long long int> RecieverKey, int Amount, long long int Sign, int offeredFee)
         {
             this->PublicKeyOfSenderWallet = SenderKey;
             this->PublicKeyOfRecieverWallet = RecieverKey;
@@ -33,6 +36,7 @@ class Transaction
             // generate hash of transaction string
             string TxString = to_string(this->PublicKeyOfSenderWallet.first) + to_string(this->PublicKeyOfRecieverWallet.first) + to_string(this->AmountSent) + to_string(this->Signature); 
             this->TxHash = Hash(TxString);
+            this->TxFee=offeredFee;
         }
 
         // setter function for isVerified flag
