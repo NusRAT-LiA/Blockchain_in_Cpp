@@ -32,7 +32,10 @@ class Wallet{
          WalletAdress=WalletOwner.EntityAdress();
 
        }
-      
+      int getBalance()
+      {
+         return this->Balance;
+      }
       bool isPrivKeyValid(long long int SecretKey)
       {
          return this->WalletOwner.isEnityValid(SecretKey);

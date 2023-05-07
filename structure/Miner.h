@@ -33,19 +33,36 @@ class Miner {
        Block newBlock = Block(transactions,previousHash,difficulty);
        return newBlock;
     }
-    bool verifyTransactions(Block block,map<pair<long long int , long long int> , Wallet > KeyMap){
+    Block verifyTransactions(Block block,map<pair<long long int , long long int> , Wallet > KeyMap){
       for(auto i : block.transactions)
       {
-        if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature))){block.transactions.remove(i); return false;}
-        if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent)){block.transactions.remove(i); return false;}
-
+        if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature)))
+        {
+          cout<<"\nSecret Key mismatch detected in transaction ID : "<<i.TxHash<<endl;sleep(1);
+          cout<<"Miner removing "<<i.TxHash<<" from the chain"<<endl;sleep(1);
+          block.transactions.remove(i);
+          continue;
+        }
+        if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent))
+        {
+          cout<<"Wallet "<<KeyMap[i.PublicKeyOfSenderWallet].WalletAdress<<" does not have sufficient balance"<<endl;sleep(1);
+          cout<<"Miner removing "<<i.TxHash<<" from the chain"<<endl;sleep(1);
+          block.transactions.remove(i);
+          continue;
+        }
+        
+        cout<<"Transaction : "<<i.TxHash<<" verified ! "<<endl;sleep(1);
       }
 
-      return true;
+      return block;
     }
 
     Block mineBlock(Block block)
     { 
+      cout<<"Valid block hash has to have "<<block.difficulty<<" 0s on front"<<endl;sleep(1);
+      cout<<"Nonce(Number used only once) combined with blokc's information , is used to generate valid block hash"<<endl;sleep(2);
+
+      cout<<"Miner performing computational work to find out the for the block nonce"<<endl;sleep(2);
       int target=block.difficulty;
       unsigned int nonce=0;
 
@@ -63,6 +80,7 @@ class Miner {
 
          if(validateNonce(CandidateHash,block.difficulty))
          { 
+          cout<<"Nonce found !"<<endl;
           block.nonce=nonce;
           block.timestamp=time;
           block.hash=CandidateHash;
