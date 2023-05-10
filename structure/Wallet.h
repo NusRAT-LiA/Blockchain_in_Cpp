@@ -19,7 +19,7 @@ class Wallet{
        string WalletAdress;
        
        Wallet(){}
-       Wallet(string name)
+       Wallet(string name , int balance )
        {
          //result=generateKey(name);
          ElipticCurve EC=CreateCurve();
@@ -30,6 +30,7 @@ class Wallet{
          this->WalletOwner=generateKey(WalletOwner,EC);
 
          WalletAdress=WalletOwner.EntityAdress();
+         this->Balance=balance;
 
        }
       int getBalance()

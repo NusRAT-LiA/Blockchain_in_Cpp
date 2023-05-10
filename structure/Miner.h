@@ -33,29 +33,34 @@ class Miner {
        Block newBlock = Block(transactions,previousHash,difficulty);
        return newBlock;
     }
-    Block verifyTransactions(Block block,map<pair<long long int , long long int> , Wallet > KeyMap){
-      for(auto i : block.transactions)
-      {
-        if(!(KeyMap[i.PublicKeyOfSenderWallet].isPrivKeyValid(i.Signature)))
-        {
-          cout<<"\nSecret Key mismatch detected in transaction ID : "<<i.TxHash<<endl;sleep(1);
-          cout<<"Miner removing "<<i.TxHash<<" from the chain"<<endl;sleep(1);
-          block.transactions.remove(i);
-          continue;
-        }
-        if(!KeyMap[i.PublicKeyOfSenderWallet].isBalanceValid(i.AmountSent))
-        {
-          cout<<"Wallet "<<KeyMap[i.PublicKeyOfSenderWallet].WalletAdress<<" does not have sufficient balance"<<endl;sleep(1);
-          cout<<"Miner removing "<<i.TxHash<<" from the chain"<<endl;sleep(1);
-          block.transactions.remove(i);
-          continue;
-        }
-        
-        cout<<"Transaction : "<<i.TxHash<<" verified ! "<<endl;sleep(1);
-      }
+    Block verifyTransactions(Block block, map<pair<long long int, long long int>, Wallet> KeyMap) {
+    for (auto it = block.transactions.begin(); it != block.transactions.end();) {
+        Transaction& transaction = *it; // Get a reference to the current transaction
 
-      return block;
+        if (!(KeyMap[transaction.PublicKeyOfSenderWallet].isPrivKeyValid(transaction.Signature))) {
+            cout << "\nSecret Key mismatch detected in transaction ID: " << transaction.TxHash << endl;
+            sleep(1);
+            cout << "Miner removing " << transaction.TxHash << " from the chain" << endl;
+            it = block.transactions.erase(it); // Remove the transaction and update the iterator
+            continue;
+        }
+
+        if (!KeyMap[transaction.PublicKeyOfSenderWallet].isBalanceValid(transaction.AmountSent)) {
+            cout << "Wallet " << KeyMap[transaction.PublicKeyOfSenderWallet].WalletAdress<< " does not have sufficient balance" << endl;
+            sleep(1);
+            cout << "Miner removing " << transaction.TxHash << " from the chain" << endl;
+            it = block.transactions.erase(it); // Remove the transaction and update the iterator
+            continue;
+        }
+
+        cout << "Transaction: " << transaction.TxHash << " verified!" << endl;
+        sleep(1);
+        ++it; // Move to the next transaction
     }
+
+    return block;
+}
+
 
     Block mineBlock(Block block)
     { 

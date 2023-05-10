@@ -40,9 +40,9 @@ public:
     void minePendingTransactions();
     float getBalanceOfAddress(std::string address);
 
-    Wallet addWallet(string Name)
+    Wallet addWallet(string Name , int balance)
     {
-        Wallet NewWallet=Wallet(Name);
+        Wallet NewWallet=Wallet(Name,balance);
         this->KeyMap[make_pair( NewWallet.WalletOwner.PublicKey.getX(),NewWallet.WalletOwner.PublicKey.getY())]=NewWallet;
         this->Wallets.push_back(NewWallet);
         return NewWallet;
@@ -56,8 +56,8 @@ public:
     }
 
     Miner getMiner(int ID)
-    {
-        return this->minerMap[ID];
+    {   
+        return this->minerMap.at(ID);
     }
 
     void addTransaction(pair<long long int,long long int> SenderKey , pair<long long int,long long int> RecieverKey , int Amount, long long int Sign,int offeredFee)
@@ -90,7 +90,8 @@ public:
 
       cout<<"Miner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;
       while(numOfCollectedTx--)
-      {
+      { 
+        if(this->pendingTransactions.size()==0)break;
         Transaction tx = this->pendingTransactions.back();
         CollecttedTx.push_back(tx);
         this->pendingTransactions.pop_back();
@@ -98,7 +99,7 @@ public:
       cout<<"Block being created with .."<<endl;
       for(auto i :CollecttedTx)
       {
-        cout<<"Tx hash          : "<<i.TxHash<<endl;sleep(1);
+      cout<<"Tx hash            : "<<i.TxHash<<endl;sleep(1);
       }
       cout<<"Network difficulty : "<<this->difficulty<<endl;sleep(1);
       cout<<"Previous blockhash : "<<this->blocks.back().hash<<endl;sleep(1);
@@ -117,11 +118,12 @@ public:
       { 
         cout<<"Transaction "<<i.TxHash<<"successful !"<<endl;
         this->KeyMap[i.PublicKeyOfSenderWallet].removeBalance(i.AmountSent+i.TxFee);
-        cout<<"New balance of sender wallet"<<this->KeyMap[i.PublicKeyOfSenderWallet].WalletAdress<<" : "<<this->KeyMap[i.PublicKeyOfSenderWallet].getBalance();
+        cout<<"New balance of sender wallet"<<this->KeyMap[i.PublicKeyOfSenderWallet].WalletAdress<<" : "<<this->KeyMap[i.PublicKeyOfSenderWallet].getBalance()<<endl;
         this->KeyMap[i.PublicKeyOfRecieverWallet].addBalance(i.AmountSent);
-        cout<<"New balance of reciever wallet"<<this->KeyMap[i.PublicKeyOfRecieverWallet].WalletAdress<<" : "<<this->KeyMap[i.PublicKeyOfRecieverWallet].getBalance();
+        cout<<"New balance of reciever wallet"<<this->KeyMap[i.PublicKeyOfRecieverWallet].WalletAdress<<" : "<<this->KeyMap[i.PublicKeyOfRecieverWallet].getBalance()<<endl;
         miner.minerBalance+=i.TxFee;
         cout<<"Transaction fee "<<i.TxFee<<" added to Miner ID "<<miner.getId()<<"'s balance"<<endl;
+        cout<<"\n";
       }
 
       cout<<"Block added to the chain successfully !"<<endl;    
