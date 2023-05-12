@@ -1,4 +1,5 @@
 #include"GeneratePoint.cpp"
 #include"ElipticCurve.h"
-pair<long long int , long long int >  generateKey(string Name);
+#include "Entity.h"
+Entity  generateKey(Entity newEntity,ElipticCurve EC);
 ElipticCurve CreateCurve();

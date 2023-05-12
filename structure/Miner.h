@@ -36,7 +36,34 @@ class Miner {
     Block verifyTransactions(Block block, map<pair<long long int, long long int>, Wallet> KeyMap) {
     for (auto it = block.transactions.begin(); it != block.transactions.end();) {
         Transaction& transaction = *it; // Get a reference to the current transaction
+        
+        try
+        {
+            KeyMap.at(transaction.PublicKeyOfSenderWallet);
+        }
+        catch(std::out_of_range&  e)
+        {   
+             cout<<"In Transaction : "<<transaction.TxHash<<endl;
+             cout<<"Error in finding Sender";
+             cout <<"Miner removing " << transaction.TxHash << " from the chain" << endl;
+             it = block.transactions.erase(it); // Remove the transaction and update the iterator
+             continue;
 
+        }
+
+         try
+        {
+            KeyMap.at(transaction.PublicKeyOfRecieverWallet);
+        }
+        catch(std::out_of_range&  e)
+        {   
+             cout<<"In Transaction : "<<transaction.TxHash<<endl;
+             cout<<"Error in finding Reciever"<<endl;
+             cout <<"Miner removing " << transaction.TxHash << " from the chain" << endl;
+             it = block.transactions.erase(it); // Remove the transaction and update the iterator
+             continue;
+
+        }
         if (!(KeyMap[transaction.PublicKeyOfSenderWallet].isPrivKeyValid(transaction.Signature))) {
             cout << "\nSecret Key mismatch detected in transaction ID: " << transaction.TxHash << endl;
             sleep(1);

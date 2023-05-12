@@ -109,11 +109,18 @@ public:
       cout<<"Miner ID"<<miner.getId()<<"  started verifying block's transactions..."<<endl;sleep(1);
       Newblock = miner.verifyTransactions(Newblock,this->KeyMap);
       cout<<"Miner ID"<<miner.getId()<<" started mining block"<<endl;sleep(1);
+      if(Newblock.transactions.size()==0)
+      {
+        cout<<"Block has no verified Transactions ! Trying mining again !"<<endl;
+        this->mineBlock(miner);
+        return ;
+      }
       miner.mineBlock(Newblock);
+    
       cout<<"Block mined with nonce "<<Newblock.nonce<<endl;sleep(1);
 
       this->blocks.push_back(Newblock);
-
+      
       for(auto i :Newblock.transactions)
       { 
         cout<<"Transaction "<<i.TxHash<<"successful !"<<endl;
