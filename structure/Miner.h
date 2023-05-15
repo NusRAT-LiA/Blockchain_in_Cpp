@@ -13,8 +13,11 @@ class Miner {
     
  private:
        int id;
-
+       
+       
+       // Function to validate the nonce in the block hash
        bool validateNonce(string hash, int target) {
+        // valid hash has to have target number of leading 0s 
         for(int i = 0; i < target; i++) {
             if(hash[i] != '0') {
                 return false;
@@ -28,13 +31,18 @@ class Miner {
     Miner(int id){this->id=id;this->minerBalance=0;}
     int getId(){return this->id;}
 
+    // Function to create a new block
     Block createBlock(list<Transaction> transactions,string previousHash, int difficulty)
     {
        Block newBlock = Block(transactions,previousHash,difficulty);
        return newBlock;
     }
-    Block verifyTransactions(Block block, map<pair<long long int, long long int>, Wallet> KeyMap) {
-    for (auto it = block.transactions.begin(); it != block.transactions.end();) {
+    
+    // Function to verify transactions in a block
+    Block verifyTransactions(Block block, map<pair<long long int, long long int>, Wallet> KeyMap)
+     {
+
+       for (auto it = block.transactions.begin(); it != block.transactions.end();) {
         Transaction& transaction = *it; // Get a reference to the current transaction
         
         try
@@ -83,10 +91,10 @@ class Miner {
         cout << "Transaction: " << transaction.TxHash << " verified!" << endl;
         sleep(1);
         ++it; // Move to the next transaction
-    }
+         }
 
-    return block;
-}
+           return block;
+     }
 
 
     Block mineBlock(Block block)
@@ -96,23 +104,24 @@ class Miner {
 
       cout<<"Miner performing computational work to find out the for the block nonce"<<endl;sleep(2);
       int target=block.difficulty;
-      unsigned int nonce=0;
+      unsigned int nonce=0;// initialize nonce with 0
 
       while(true)
       {
-        string noncestr=to_string(nonce);
+        string noncestr=to_string(nonce); // turn integer nonce value into string
         auto now = chrono::system_clock::now();
     
          // Convert to a time_t object
          time_t time =chrono::system_clock::to_time_t(now);
-         string timestr=to_string(time);
-         string Blockhash=block.calculateHash();
-         string CandidateHash=Hash(Blockhash+noncestr+timestr);
+         string timestr=to_string(time);  // convert time value into string
+         string Blockhash=block.calculateHash(); // Calculate block's hash without nonce and timestamp
+         string CandidateHash=Hash(Blockhash+noncestr+timestr);// add nonce and respective timestamp and hash again 
          
 
-         if(validateNonce(CandidateHash,block.difficulty))
+         if(validateNonce(CandidateHash,block.difficulty)) // verify whether hash with choosen nonce and timestamp is valid
          { 
           cout<<"Nonce found !"<<endl;
+          // update block with valid nonce and timestamp
           block.nonce=nonce;
           block.timestamp=time;
           block.hash=CandidateHash;
@@ -122,7 +131,6 @@ class Miner {
          nonce++;
       }
     }
-    bool isValidChain(std::vector<Block> chain);
 
 
 };

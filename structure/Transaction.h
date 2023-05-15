@@ -39,11 +39,7 @@ class Transaction
             this->TxFee=offeredFee;
         }
 
-        // setter function for isVerified flag
-        // void SetStatus(bool status)
-        // {
-        //     this->isVerified = status;
-        // }
+        
 };
 
 #endif

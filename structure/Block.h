@@ -46,19 +46,16 @@ private:
 
 
 public:
-    string previousHash;
-    time_t timestamp;
-    list<Transaction> transactions;
-    string hash;
-    int nonce;
-    int index;
-    int difficulty;
-    string merkleRoot;
+    string previousHash;            // the hash of the previous block in the
+    time_t timestamp;               // the time when the block was mined
+    list<Transaction> transactions; // Stores the list of transactions included in the block
+    string hash;                    // hash of the block information
+    int nonce;                      // a random value used in mining
+    int index;                      // index of the block in  blockchain
+    int difficulty;                 // the mining difficulty of the block(the number of 0s needed to be present in a valid block)
+    string merkleRoot;              // merkle tree root hash of all the transactions done in a block
 
-    Block()
-    {
-        
-    }
+    Block() { }
 
     Block(list<Transaction> transactions, string previousHash, int difficulty){
         this->transactions=transactions;
@@ -67,12 +64,10 @@ public:
     }
 
     string calculateHash(){
-        this->merkleRoot=calculateMerkleRoot();
-        string blockStr=this->merkleRoot+this->previousHash+to_string(this->index)+to_string(this->difficulty);
-        return Hash(blockStr);
+        this->merkleRoot=calculateMerkleRoot(); // calculate merkle tree root of the block's transations
+        string blockStr=this->merkleRoot+this->previousHash+to_string(this->index)+to_string(this->difficulty);//turn all the block data into string 
+        return Hash(blockStr);// return hash value of block data string 
     }
-    void mineBlock(int difficulty);
-    bool isValid();
 
 
   

@@ -35,9 +35,12 @@ class ElipticCurve{
               this->b=b;
               this->rangeConstant=rangeC;
            } 
-
+           
+           // Function to calculate the y-coordinate of a point on the elliptic curve
+           // given the x-coordinate
            long long int CalcYsqrt(long long int x)
-           {
+           {   
+                // Calculate the value of y using the equation y = x^3 + ax + b
                 long long int y = pow(x,3)+(this->a*x)+this->b;
 
                 return(y%(this->rangeConstant));
