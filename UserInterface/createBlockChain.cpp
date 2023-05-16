@@ -147,7 +147,7 @@ int main()
 
    //  cout<<"A block in a blockchain has to be mined in order to be added to the chain"<<endl;sleep(2);
    //  cout<<"[Miner] is an entity in a blockchain who solves mathmatical puzzle to meet difficulty level of a block "<<endl;sleep(2);
-   //  cout<<"[Difficulty] of a block is the number of 0's that has to be at first of a valid block's hash"<<endl;sleep(2);
+    cout<<"[Difficulty] of a block is the number of 0's that has to be at first of a valid block's hash"<<endl;sleep(2);
    //  cout<<"A [hash] of a block is is a fixed-length alphanumeric string that is calculated using the data inside the block and a hashing algorithm"<<endl;sleep(2);
    //  cout<<"eg . For a difficulty of 10  hash of a valid block could be 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"<<endl;sleep(2);
 

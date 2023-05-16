@@ -24,7 +24,7 @@ private:
     
 
 public:
-    list<Block> blocks;
+    vector<Block> blocks;
     Block genesisBlock;
 
     string chainName;
@@ -35,10 +35,11 @@ public:
         this->difficulty=difficulty;
         this->chainName=Name;
     }
-   
-    Block& getLatestBlock();
-    void minePendingTransactions();
-    float getBalanceOfAddress(std::string address);
+    
+    Block getBlock(int index)
+    {
+      return this->blocks[index];
+    }
 
     Wallet addWallet(string Name , int balance)
     {
@@ -139,9 +140,9 @@ public:
 
     void createGenesisBlock()
     {   
-        cout<<"Creating GenesisBlock(The first block of a blockchain)....."<<endl;sleep(2);
-        cout<<"Adding a null Transaction..."<<endl;sleep(1);
-        this->addTransaction(pair<long long , long long >(),pair<long long ,long  long >(),0,0,10);
+        cout<<"\nCreating GenesisBlock(The first block of a blockchain)....."<<endl;sleep(2);
+        cout<<"\nAdding a null Transaction..."<<endl;sleep(1);
+        this->addTransaction(pair<long long , long long >(),pair<long long ,long  long >(),0,0,0);
         
         cout<<"Adding Default Miner in the chain with MinerId-0..."<<endl;sleep(1);
         this->defaultMiner=Miner(0);
@@ -156,6 +157,8 @@ public:
         cout<<"DefaultMiner Mined the Genesis Block..."<<endl;
 
     }
+
+
     
      
     
