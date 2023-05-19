@@ -5,45 +5,46 @@
 #include"../structure/Wallet.h"
 #include"../structure/Transaction.h"
 #include"../structure/Miner.h"
+#include"Printings.h"
 using namespace std ;
 Blockchain myChain=Blockchain();
-void printBlock(Block block)
-{   
-    cout<<"----------------------------------------------------------------------------------------"<<endl;
-    cout<<"| Index              : "<<block.index<<endl;
-    cout<<"| Previous BlockHash : "<<block.previousHash<<endl;
-    cout<<"| BlockHash          : "<<block.hash<<endl;
-    cout<<"| Nonce              : "<<block.nonce<<endl;
-    cout<<"| Difficulty         : "<<block.difficulty<<endl;
-    cout<<"| MerkleRoot         : "<<block.merkleRoot<<endl;
-    cout<<"| Timestamp          : \n"<<to_string(block.timestamp)<<endl;
-    cout<<"|\n|\n";
-    cout<<"| Transactions       : "<<endl;
-    cout<<"|\n";
-    for(auto i : block.transactions)
-    { 
-      cout<<"| Transaction Index -> "<<i.TxIndexInBlock<<endl;
-      cout<<"| TransactionHash   -> "<<i.TxHash<<endl;
-      cout<<"| SenderKeyPair     -> "<<i.PublicKeyOfSenderWallet.first<<" "<<i.PublicKeyOfSenderWallet.second<<endl;
-      cout<<"| RecieverrKeyPair  -> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
-      cout<<"| Sent Amount       -> "<<i.AmountSent<<endl;
-      cout<<"|\n";
+// void printBlock(Block block)
+// {   
+//     cout<<"----------------------------------------------------------------------------------------"<<endl;
+//     cout<<"| Index              : "<<block.index<<endl;
+//     cout<<"| Previous BlockHash : "<<block.previousHash<<endl;
+//     cout<<"| BlockHash          : "<<block.hash<<endl;
+//     cout<<"| Nonce              : "<<block.nonce<<endl;
+//     cout<<"| Difficulty         : "<<block.difficulty<<endl;
+//     cout<<"| MerkleRoot         : "<<block.merkleRoot<<endl;
+//     cout<<"| Timestamp          : \n"<<to_string(block.timestamp)<<endl;
+//     cout<<"|\n|\n";
+//     cout<<"| Transactions       : "<<endl;
+//     cout<<"|\n";
+//     for(auto i : block.transactions)
+//     { 
+//       cout<<"| Transaction Index -> "<<i.TxIndexInBlock<<endl;
+//       cout<<"| TransactionHash   -> "<<i.TxHash<<endl;
+//       cout<<"| SenderKeyPair     -> "<<i.PublicKeyOfSenderWallet.first<<" "<<i.PublicKeyOfSenderWallet.second<<endl;
+//       cout<<"| RecieverrKeyPair  -> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
+//       cout<<"| Sent Amount       -> "<<i.AmountSent<<endl;
+//       cout<<"|\n";
 
-    }
-    cout<<"---------------------------------------------------------------------------------------"<<endl;
+//     }
+//     cout<<"---------------------------------------------------------------------------------------"<<endl;
 
 
-}
+// }
 
-void printBlockChain()
-{
-   for( auto block : myChain.blocks)
-   {
-      printBlock(block);
-      cout<<"^\n|\n|\n";
-   }
+// void printBlockChain()
+// {
+//    for( auto block : myChain.blocks)
+//    {
+//       printBlock(block);
+//       cout<<"^\n|\n|\n";
+//    }
 
-}
+// }
 
 void addWallet()
 {
@@ -188,7 +189,7 @@ int main()
     mineBlock();
    
    cout<<"Here's your chain !";
-   printBlockChain();
+   printBlockChain(myChain);
 
 
     
