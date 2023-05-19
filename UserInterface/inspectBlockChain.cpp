@@ -5,6 +5,7 @@
 #include"../structure/Wallet.h"
 #include"../structure/Transaction.h"
 #include"../structure/Miner.h"
+#include"Printings.h"
 using namespace std ;
 
 Blockchain BlockChain;
@@ -24,18 +25,27 @@ void getWallets()
 
 void getTransactions()
 {
+   for(auto i : BlockChain.addedTransactions)
+    { 
+      cout<<"| TransactionHash   -> "<<i.TxHash<<endl;
+      cout<<"| SenderKeyPair     -> "<<i.PublicKeyOfSenderWallet.first<<" "<<i.PublicKeyOfSenderWallet.second<<endl;
+      cout<<"| RecieverrKeyPair  -> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
+      cout<<"| Sent Amount       -> "<<i.AmountSent<<endl;
+      cout<<"|\n";
 
+    }
 }
 
-void getABlock()
+void getABlock(int index)
 {
-
+   printBlock(BlockChain.getBlock(index));
 }
 
 void getChain()
 {
-
+  printBlockChain(BlockChain);
 }
+
 void inspectMyChain(Blockchain myChain)
 {
   

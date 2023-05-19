@@ -19,6 +19,7 @@ public:
     vector<Block> blocks;
     Block genesisBlock;
     vector<Transaction> pendingTransactions;
+    vector<Transaction> addedTransactions;
     list<Wallet> Wallets;
     map<pair<long long int , long long int> , Wallet > KeyMap;
     map<int,Miner> minerMap;
@@ -137,6 +138,7 @@ public:
       
       for(auto i :Newblock.transactions)
       { 
+        this->addedTransactions.push_back(i);
         cout<<"Transaction "<<i.TxHash<<"successful !"<<endl;
         this->KeyMap[i.PublicKeyOfSenderWallet].removeBalance(i.AmountSent+i.TxFee);
         cout<<"New balance of sender wallet"<<this->KeyMap[i.PublicKeyOfSenderWallet].WalletAdress<<" : "<<this->KeyMap[i.PublicKeyOfSenderWallet].getBalance()<<endl;
