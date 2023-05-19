@@ -22,10 +22,11 @@ void printBlock(Block block)
     cout<<"|\n";
     for(auto i : block.transactions)
     { 
-      cout<<"| TransactionHash -> "<<i.TxHash<<endl;
-      cout<<"| SenderKeyPair   -> "<<i.PublicKeyOfSenderWallet.first<<" "<<i.PublicKeyOfSenderWallet.second<<endl;
-      cout<<"| RecieverrKeyPair-> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
-      cout<<"| Sent Amount     -> "<<i.AmountSent<<endl;
+      cout<<"| Transaction Index -> "<<i.TxIndexInBlock<<endl;
+      cout<<"| TransactionHash   -> "<<i.TxHash<<endl;
+      cout<<"| SenderKeyPair     -> "<<i.PublicKeyOfSenderWallet.first<<" "<<i.PublicKeyOfSenderWallet.second<<endl;
+      cout<<"| RecieverrKeyPair  -> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
+      cout<<"| Sent Amount       -> "<<i.AmountSent<<endl;
       cout<<"|\n";
 
     }

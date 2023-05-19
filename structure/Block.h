@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include <ctime>
+#include<exception>
 #include "Transaction.h"
 #include "../Sha256_Algorithm/Sha256.h"
 using namespace std;
@@ -48,7 +49,7 @@ private:
 public:
     string previousHash;            // the hash of the previous block in the
     time_t timestamp;               // the time when the block was mined
-    list<Transaction> transactions; // Stores the list of transactions included in the block
+    vector<Transaction> transactions; // Stores the list of transactions included in the block
     string hash;                    // hash of the block information
     int nonce;                      // a random value used in mining
     int index;                      // index of the block in  blockchain
@@ -57,7 +58,7 @@ public:
 
     Block() { }
 
-    Block(list<Transaction> transactions, string previousHash, int difficulty){
+    Block(vector<Transaction> transactions, string previousHash, int difficulty){
         this->transactions=transactions;
         this->previousHash=previousHash;
         this->difficulty=difficulty;
@@ -67,6 +68,22 @@ public:
         this->merkleRoot=calculateMerkleRoot(); // calculate merkle tree root of the block's transations
         string blockStr=this->merkleRoot+this->previousHash+to_string(this->index)+to_string(this->difficulty);//turn all the block data into string 
         return Hash(blockStr);// return hash value of block data string 
+    }
+
+    Transaction getTransaction(int index)
+    {
+      if(this->transactions.size()<index)
+       throw out_of_range("");
+       
+      return this->transactions[index-1];
+    }
+
+    void setTransaction(int index , Transaction newTransaction)
+    {  
+       newTransaction.CalculateHash();
+       this->transactions[index-1]=newTransaction;
+       
+       this->calculateHash();
     }
 
 

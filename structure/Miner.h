@@ -32,7 +32,7 @@ class Miner {
     int getId(){return this->id;}
 
     // Function to create a new block
-    Block createBlock(list<Transaction> transactions,string previousHash, int difficulty)
+    Block createBlock(vector<Transaction> transactions,string previousHash, int difficulty)
     {
        Block newBlock = Block(transactions,previousHash,difficulty);
        return newBlock;

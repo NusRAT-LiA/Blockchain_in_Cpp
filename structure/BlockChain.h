@@ -13,9 +13,8 @@ using namespace std;
 class Blockchain {
 
 private:
-    int difficulty;
     int miningReward;
-    list<Transaction> pendingTransactions;
+    vector<Transaction> pendingTransactions;
     list<Wallet> Wallets;
     map<pair<long long int , long long int> , Wallet > KeyMap;
     map<int,Miner> minerMap;
@@ -24,6 +23,7 @@ private:
     
 
 public:
+    int difficulty;
     vector<Block> blocks;
     Block genesisBlock;
 
@@ -36,10 +36,16 @@ public:
         this->chainName=Name;
     }
     
+
     Block getBlock(int index)
-    {
+    { 
+      if(this->blocks.size()<index+1)
+       throw out_of_range("");
+
       return this->blocks[index];
     }
+
+
 
     Wallet addWallet(string Name , int balance)
     {
@@ -49,6 +55,7 @@ public:
         return NewWallet;
     }
     
+
     void addMiner(int minerId)
     {
       Miner newMiner(minerId);
@@ -56,10 +63,13 @@ public:
       this->minerMap[minerId]=newMiner;
     }
 
+
     Miner getMiner(int ID)
     {   
         return this->minerMap.at(ID);
     }
+
+
 
     void addTransaction(pair<long long int,long long int> SenderKey , pair<long long int,long long int> RecieverKey , int Amount, long long int Sign,int offeredFee)
     {
@@ -78,6 +88,8 @@ public:
         //sort(this->pendingTransactions.begin(),this->pendingTransactions.end(),cmp);
     }
 
+
+
     void mineBlock(Miner miner)
     { 
       if(this->pendingTransactions.size()==0)
@@ -86,14 +98,17 @@ public:
         cout<<"Block Creation unsuccessful !"<<endl;
         return;
       }
-      list<Transaction> CollecttedTx;
+      vector<Transaction> CollecttedTx;
       int numOfCollectedTx=3;
 
       cout<<"Miner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;
+
+      int TxIndex = 0 ;
       while(numOfCollectedTx--)
       { 
         if(this->pendingTransactions.size()==0)break;
         Transaction tx = this->pendingTransactions.back();
+        tx.TxIndexInBlock= ++TxIndex;
         CollecttedTx.push_back(tx);
         this->pendingTransactions.pop_back();
       }
@@ -104,6 +119,7 @@ public:
       }
       cout<<"Network difficulty : "<<this->difficulty<<endl;sleep(1);
       cout<<"Previous blockhash : "<<this->blocks.back().hash<<endl;sleep(1);
+
       Block Newblock = miner.createBlock(CollecttedTx,this->blocks.back().hash,this->difficulty);
       Newblock.index=this->blocks.size();
       
@@ -138,6 +154,10 @@ public:
 
     }
 
+
+
+
+
     void createGenesisBlock()
     {   
         cout<<"\nCreating GenesisBlock(The first block of a blockchain)....."<<endl;sleep(2);
@@ -158,7 +178,21 @@ public:
 
     }
 
-
+    
+    void setBlock(int  blockIndex , Block newBlock , int TxIndex , Transaction Tx)
+    {
+       newBlock.setTransaction(TxIndex,Tx);
+       this->blocks[blockIndex]=newBlock;
+       
+       int i=blockIndex+1;
+       while (i<this->blocks.size())
+       {  
+          this->blocks[i].previousHash=this->blocks[i-1].hash;
+          this->blocks[i].hash=this->blocks[i].calculateHash();
+          i++;
+       }
+       
+    }
     
      
     
