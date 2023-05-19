@@ -11,12 +11,10 @@ using namespace std;
 
 class Wallet{
 
-    private :
-       int Balance ;
-
     public :
        Entity WalletOwner;
        string WalletAdress;
+       int Balance;
        
        Wallet(){}
        Wallet(string name , int balance )

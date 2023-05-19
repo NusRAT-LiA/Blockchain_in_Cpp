@@ -12,20 +12,17 @@ using namespace std;
 
 class Blockchain {
 
-private:
-    int miningReward;
-    vector<Transaction> pendingTransactions;
-    list<Wallet> Wallets;
-    map<pair<long long int , long long int> , Wallet > KeyMap;
-    map<int,Miner> minerMap;
-    Miner defaultMiner ;
-
     
 
 public:
     int difficulty;
     vector<Block> blocks;
     Block genesisBlock;
+    vector<Transaction> pendingTransactions;
+    list<Wallet> Wallets;
+    map<pair<long long int , long long int> , Wallet > KeyMap;
+    map<int,Miner> minerMap;
+    Miner defaultMiner ;
 
     string chainName;
 
