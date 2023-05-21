@@ -1,5 +1,5 @@
-#ifndef PRINTINGS.H
-#define PRINTINGS.H
+#ifndef PRINTINGS_H
+#define PRINTINGS_H
 
 #include "Printings.cpp"
 

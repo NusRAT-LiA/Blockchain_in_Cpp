@@ -12,6 +12,8 @@ Blockchain BlockChain;
 // Function type definition
 typedef function<void()> VoidFunction;
 map<int, VoidFunction> functionMap;
+int inspectBlockInIndex;
+bool doExit=false;
 
 void getWallets()
 {
@@ -36,9 +38,18 @@ void getTransactions()
     }
 }
 
-void getABlock(int index)
-{
-   printBlock(BlockChain.getBlock(index));
+void getABlock()
+{  
+   cout<<"Enter the Block's Index : "<<endl;
+   cin>>inspectBlockInIndex;
+   try{
+   printBlock(BlockChain.getBlock(inspectBlockInIndex));
+   }
+   catch(const out_of_range& e)
+   {
+      cout<<"No Block exists in that Index !"<<endl;
+   }
+    
 }
 
 void getChain()
@@ -48,6 +59,31 @@ void getChain()
 
 void inspectMyChain(Blockchain myChain)
 {
-  
+    functionMap[1]=getWallets;
+    functionMap[2]=getTransactions;
+    functionMap[3]=getABlock;
+    functionMap[4]=getChain;
+
+    while(!doExit)
+   {  
+      int choice ;
+      cout<<"Choose from options : "<<endl;
+      cout<<"1 . Check Wallets of My Chain "<<endl;
+      cout<<"2 . Check Transactions in My Chain "<<endl;
+      cout<<"3 . Check for a Block"<<endl;
+      cout<<"4 . Check Full chain"<<endl;
+      cout<<"5 . Exit "<<endl;
+      cin>>choice;
+    
+
+      if(choice>5 || choice<1)
+      {
+         cout<<"Invalid Option choice ! Try again !"<<endl;
+         continue;
+      }
+      
+      functionMap[choice]();
+   }
+
  
 }

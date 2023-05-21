@@ -6,11 +6,12 @@
 #include"../structure/Transaction.h"
 #include"../structure/Miner.h"
 #include"Printings.h"
+#include"attackBlockChain.h"
 using namespace std ;
 Blockchain myChain=Blockchain();
 // void printBlock(Block block)
 // {   
-//     cout<<"----------------------------------------------------------------------------------------"<<endl;
+//     cout<<"----------------------------------------------------------------------------------------\n"<<endl;
 //     cout<<"| Index              : "<<block.index<<endl;
 //     cout<<"| Previous BlockHash : "<<block.previousHash<<endl;
 //     cout<<"| BlockHash          : "<<block.hash<<endl;
@@ -19,7 +20,7 @@ Blockchain myChain=Blockchain();
 //     cout<<"| MerkleRoot         : "<<block.merkleRoot<<endl;
 //     cout<<"| Timestamp          : \n"<<to_string(block.timestamp)<<endl;
 //     cout<<"|\n|\n";
-//     cout<<"| Transactions       : "<<endl;
+//     cout<<"| Transactions       : \n"<<endl;
 //     cout<<"|\n";
 //     for(auto i : block.transactions)
 //     { 
@@ -31,7 +32,7 @@ Blockchain myChain=Blockchain();
 //       cout<<"|\n";
 
 //     }
-//     cout<<"---------------------------------------------------------------------------------------"<<endl;
+//     cout<<"---------------------------------------------------------------------------------------\n"<<endl;
 
 
 // }
@@ -51,7 +52,7 @@ void addWallet()
    string newUserName;
    int AllocatedBalance;
    int numOfWallets;
-   cout<<"How many wallets do you want do add ?"<<endl;
+   cout<<"How many wallets do you want do add ?\n"<<endl;
    cin>>numOfWallets;
    while (numOfWallets--)
    {
@@ -60,7 +61,7 @@ void addWallet()
    cout<<"Allocate Balance :";
    cin>>AllocatedBalance;
    Wallet newWallet = myChain.addWallet(newUserName,AllocatedBalance);
-   cout<<"Account address :  "<<newWallet.WalletAdress<<" created!"<<endl;
+   cout<<"Account address :  "<<newWallet.WalletAdress<<" created!\n"<<endl;
    cout<<"Public Key is   : "<<newWallet.WalletOwner.PublicKey.getX()<<" "<<newWallet.WalletOwner.PublicKey.getY()<<endl;
    }
 }
@@ -68,7 +69,7 @@ void addWallet()
 void addTransaction()
 { 
    int numOfTx;
-   cout<<"How many Transactions do you want to make ?"<<endl;
+   cout<<"How many Transactions do you want to make ?\n"<<endl;
    cin>>numOfTx;
    while(numOfTx--)
    {
@@ -98,7 +99,7 @@ void addTransaction()
 void addMiner()
 {  
    int numOfMiners;
-   cout<<"How many miners do you want to add ?"<<endl;
+   cout<<"How many miners do you want to add ?\n"<<endl;
    cin>>numOfMiners;
    while (numOfMiners)
    {
@@ -117,7 +118,7 @@ void mineBlock()
     while (minerIdNotFound)
     { 
       int minerId;
-      cout<<"Enter Miner ID to appoint miner for mining block   :"<<endl;
+      cout<<"Enter Miner ID to appoint miner for mining block   :\n"<<endl;
       cin>>minerId;
       
       try
@@ -126,7 +127,7 @@ void mineBlock()
       }
       catch (std::out_of_range&  e)
       { 
-         cout<<"Minder ID not Found in your Chain ! Try again !"<<endl;
+         cout<<"Minder ID not Found in your Chain ! Try again !\n"<<endl;
          continue;
       }
 
@@ -143,15 +144,15 @@ int main()
     string chainName;
     int chainDifficulty;
 
-    cout<<"\t\t\t\tEnter the name of your BlockChain\t\t\t\t\n"<<endl;
+    cout<<"\n\t\t\t\tEnter the name of your BlockChain\t\t\t\t\n\n"<<endl;
     cin>>chainName;
     chainName=chainName+"Chain";
 
-   //  cout<<"A block in a blockchain has to be mined in order to be added to the chain"<<endl;sleep(2);
-   //  cout<<"[Miner] is an entity in a blockchain who solves mathmatical puzzle to meet difficulty level of a block "<<endl;sleep(2);
-    cout<<"[Difficulty] of a block is the number of 0's that has to be at first of a valid block's hash"<<endl;sleep(2);
-   //  cout<<"A [hash] of a block is is a fixed-length alphanumeric string that is calculated using the data inside the block and a hashing algorithm"<<endl;sleep(2);
-   //  cout<<"eg . For a difficulty of 10  hash of a valid block could be 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"<<endl;sleep(2);
+   //  cout<<"A block in a blockchain has to be mined in order to be added to the chain\n"<<endl;sleep(2);
+   //  cout<<"[Miner] is an entity in a blockchain who solves mathmatical puzzle to meet difficulty level of a block \n"<<endl;sleep(2);
+    cout<<"[Difficulty] of a block is the number of 0's that has to be at first of a valid block's hash\n"<<endl;sleep(2);
+   //  cout<<"A [hash] of a block is is a fixed-length alphanumeric string that is calculated using the data inside the block and a hashing algorithm\n"<<endl;sleep(2);
+   //  cout<<"eg . For a difficulty of 10  hash of a valid block could be 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f\n"<<endl;sleep(2);
 
     cout<<"\t\t\t"<<"Set the mining difficulty (eg. 4) of "<<chainName<<"\t\t\t\n\n"<<endl;
     cin>>chainDifficulty;
@@ -159,37 +160,39 @@ int main()
 
 
     myChain=Blockchain(chainDifficulty,chainName);
-    cout<<"\t\t\t\t"<<myChain.chainName<<" initiated !! "<<"\t\t\t\t"<<endl;sleep(2);
+    cout<<"\t\t\t\t"<<myChain.chainName<<" initiated !! "<<"\t\t\t\t\n"<<endl;sleep(2);
     myChain.createGenesisBlock();
 
-    cout<<" <---Genesis Block--->  "<<endl;
+    cout<<" <---Genesis Block--->  \n"<<endl;
     printBlock(myChain.genesisBlock);
    
 
-    cout<<"Let's star adding UserWallets to your Blockchain ......"<<endl;sleep(2);
-   //  cout<<"When a user creates a wallet in a blockchain network, the wallet generates a pair of cryptographic keys: a public key and a private key."<<endl;sleep(2);
-   //  cout<<"Private Key : A secret code used to access and manage the funds stored in wallet."<<endl;sleep(2);
-   //  cout<<"Private Key of the Sender will work as the Digital Signature of a Transaction"<<endl;sleep(1);
-   //  cout<<"Public Key  : Derived from the private key using complex Cryptographic function \n\t\t that Represants a wallet in open transactions in blockchain without revealing sensitive information about wallet"<<endl;sleep(3);
+    cout<<"Let's star adding UserWallets to your Blockchain ......\n"<<endl;sleep(2);
+   //  cout<<"When a user creates a wallet in a blockchain network, the wallet generates a pair of cryptographic keys: a public key and a private key.\n"<<endl;sleep(2);
+   //  cout<<"Private Key : A secret code used to access and manage the funds stored in wallet.\n"<<endl;sleep(2);
+   //  cout<<"Private Key of the Sender will work as the Digital Signature of a Transaction\n"<<endl;sleep(1);
+   //  cout<<"Public Key  : Derived from the private key using complex Cryptographic function \n\t\t that Represants a wallet in open transactions in blockchain without revealing sensitive information about wallet\n"<<endl;sleep(3);
      addWallet();
   
-    cout<<"Let's make Transactions !!..."<<endl;sleep(1);
+    cout<<"Let's make Transactions !!...\n"<<endl;sleep(1);
     addTransaction();
     
     string ToAddMiner;
-    cout<<"You already have a default miner with MinerID 0"<<endl;sleep(1);
-    cout<<"Do you want to add more miners ?(YES or NO)"<<endl;
+    cout<<"You already have a default miner with MinerID 0\n"<<endl;sleep(1);
+    cout<<"Do you want to add more miners ?(YES or NO)\n"<<endl;
     cin>>ToAddMiner;
     if(ToAddMiner=="YES" || ToAddMiner=="yes" || ToAddMiner=="Yes")
     addMiner();
 
-    cout<<"Let's start mining Blocks !"<<endl;
-    cout<<".";sleep(1);cout<<" .";sleep(1);cout<<" ."<<endl;sleep(1);
+    cout<<"Let's start mining Blocks !\n"<<endl;
+    cout<<".";sleep(1);cout<<" .";sleep(1);cout<<" .\n"<<endl;sleep(1);
     
     mineBlock();
    
    cout<<"Here's your chain !";
    printBlockChain(myChain);
+
+   attackChain(myChain);
 
 
     

@@ -24,7 +24,9 @@ class Transaction
         bool operator==(const Transaction& other) const {
          return TxHash == other.TxHash;
          }
-   
+        
+        Transaction()
+        {}
 
         // constructor for Transaction class
         Transaction(pair<long long int,long long int> SenderKey, pair<long long int,long long int> RecieverKey, int Amount, long long int Sign, int offeredFee)
