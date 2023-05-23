@@ -93,13 +93,13 @@ public:
       if(this->pendingTransactions.size()==0)
       {
         cout<<"No transaction is pending on the chain "<<endl;sleep(1);
-        cout<<"Block Creation unsuccessful !"<<endl;
+        cout<<"Block Creation unsuccessful !\n"<<endl;
         return;
       }
       vector<Transaction> CollecttedTx;
       int numOfCollectedTx=3;
 
-      cout<<"Miner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;
+      cout<<"\nMiner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;sleep(2);
 
       int TxIndex = 0 ;
       while(numOfCollectedTx--)
@@ -110,27 +110,28 @@ public:
         CollecttedTx.push_back(tx);
         this->pendingTransactions.pop_back();
       }
-      cout<<"Block being created with .."<<endl;
+      cout<<"Block being created with .."<<endl;sleep(2);
       for(auto i :CollecttedTx)
       {
       cout<<"Tx hash            : "<<i.TxHash<<endl;sleep(1);
       }
-      cout<<"Network difficulty : "<<this->difficulty<<endl;sleep(1);
-      cout<<"Previous blockhash : "<<this->blocks.back().hash<<endl;sleep(1);
+      cout<<"\n";
+      cout<<"Network difficulty : "<<this->difficulty<<endl;sleep(2);
+      cout<<"Previous blockhash : "<<this->blocks.back().hash<<endl;sleep(2);
 
       Block Newblock = miner.createBlock(CollecttedTx,this->blocks.back().hash,this->difficulty);
       Newblock.index=this->blocks.size();
       
-      cout<<"Miner ID"<<miner.getId()<<"  started verifying block's transactions..."<<endl;sleep(1);
+      cout<<"\nMiner ID"<<miner.getId()<<"  started verifying block's transactions..."<<endl;sleep(2);
       Newblock = miner.verifyTransactions(Newblock,this->KeyMap);
-      cout<<"Miner ID"<<miner.getId()<<" started mining block"<<endl;sleep(1);
+      cout<<"\nMiner ID"<<miner.getId()<<" started mining block"<<endl;sleep(2);
       if(Newblock.transactions.size()==0)
       {
         cout<<"Block has no verified Transactions ! Trying mining again !"<<endl;
         this->mineBlock(miner);
         return ;
       }
-      miner.mineBlock(Newblock);
+      Newblock=miner.mineBlock(Newblock);
     
       cout<<"Block mined with nonce "<<Newblock.nonce<<endl;sleep(1);
 
@@ -159,21 +160,21 @@ public:
 
     void createGenesisBlock()
     {   
-        cout<<"\nCreating GenesisBlock(The first block of a blockchain)....."<<endl;sleep(2);
-        cout<<"\nAdding a null Transaction..."<<endl;sleep(1);
+        cout<<"\n**Creating GenesisBlock(The first block of a blockchain).....**\n"<<endl;sleep(2);
+        cout<<"\n**Adding a null Transaction...**\n"<<endl;sleep(2);
         this->addTransaction(pair<long long , long long >(),pair<long long ,long  long >(),0,0,0);
         
-        cout<<"Adding Default Miner in the chain with MinerId-0..."<<endl;sleep(1);
+        cout<<"\n**Adding Default Miner in the chain with MinerId-0...**\n"<<endl;sleep(2);
         this->defaultMiner=Miner(0);
         this->minerMap[0]=defaultMiner;
-        cout<<"DefaultMiner adding null Transaction to a block..."<<endl;sleep(1);
+        cout<<"**DefaultMiner adding null Transaction to a block...**\n"<<endl;sleep(1);
         Block Newblock = defaultMiner.createBlock(pendingTransactions,"0",this->difficulty);
         this->pendingTransactions.clear();
         Newblock.index=this->blocks.size();
     
         this->genesisBlock=defaultMiner.mineBlock(Newblock);
         this->blocks.push_back(this->genesisBlock);
-        cout<<"DefaultMiner Mined the Genesis Block..."<<endl;
+        cout<<"**DefaultMiner Mined the Genesis Block...**\n"<<endl;
 
     }
 

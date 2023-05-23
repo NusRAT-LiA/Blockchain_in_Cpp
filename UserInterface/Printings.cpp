@@ -14,7 +14,7 @@ void printBlock(Block block)
     cout<<"| Nonce              : "<<block.nonce<<endl;
     cout<<"| Difficulty         : "<<block.difficulty<<endl;
     cout<<"| MerkleRoot         : "<<block.merkleRoot<<endl;
-    cout<<"| Timestamp          : \n"<<to_string(block.timestamp)<<endl;
+    cout<<"| Timestamp          : "<<to_string(block.timestamp)<<endl;
     cout<<"|\n|\n";
     cout<<"| Transactions       : "<<endl;
     cout<<"|\n";
@@ -42,11 +42,17 @@ void printBlockChain(Blockchain myChain)
    }
    for( auto block : myChain.blocks)
    {
-      printBlock(block);
+    
       if(block.hash.substr(0,myChain.difficulty)!=validPrefix)
-      cout<<"^\n|\nX\n|\nInvalid block detected ! Connection broke !\n|\nX\n|\n"<<endl;
+      {
+       cout<<"^\n|\nX\n|\nInvalid block detected ! Connection broke !\n|\nX\n|\n"<<endl;
+      
+      } 
       else
-      cout<<"^\n|\n|\n";
+      {
+        printBlock(block);
+        cout<<"^\n|\n|\n";
+      }  
    }
 
 }

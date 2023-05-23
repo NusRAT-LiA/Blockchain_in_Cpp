@@ -11,9 +11,9 @@ using namespace std ;
 Blockchain BlockChain;
 // Function type definition
 typedef function<void()> VoidFunction;
-map<int, VoidFunction> functionMap;
+map<int, VoidFunction> inspectingFunctionMap;
 int inspectBlockInIndex;
-bool doExit=false;
+
 
 void getWallets()
 {
@@ -22,6 +22,7 @@ void getWallets()
     cout<<"Wallet's  Address     : "<<i.WalletAdress<<endl;
     cout<<"Wallet's  Public  Key : "<<i.WalletOwner.PublicKey.getX()<<" "<<i.WalletOwner.PublicKey.getY()<<endl;
     cout<<"Wallet's  Balance     : "<<i.Balance<<endl;
+    sleep(2);
   }
 }
 
@@ -34,7 +35,7 @@ void getTransactions()
       cout<<"| RecieverrKeyPair  -> "<<i.PublicKeyOfRecieverWallet.first<<" "<<i.PublicKeyOfRecieverWallet.second<<endl;
       cout<<"| Sent Amount       -> "<<i.AmountSent<<endl;
       cout<<"|\n";
-
+      sleep(2);
     }
 }
 
@@ -59,12 +60,14 @@ void getChain()
 
 void inspectMyChain(Blockchain myChain)
 {
-    functionMap[1]=getWallets;
-    functionMap[2]=getTransactions;
-    functionMap[3]=getABlock;
-    functionMap[4]=getChain;
+    inspectingFunctionMap[1]=getWallets;
+    inspectingFunctionMap[2]=getTransactions;
+    inspectingFunctionMap[3]=getABlock;
+    inspectingFunctionMap[4]=getChain;
 
-    while(!doExit)
+    BlockChain=myChain;
+
+    while(true)
    {  
       int choice ;
       cout<<"Choose from options : "<<endl;
@@ -81,9 +84,13 @@ void inspectMyChain(Blockchain myChain)
          cout<<"Invalid Option choice ! Try again !"<<endl;
          continue;
       }
+
+      if(choice==5)break;
       
-      functionMap[choice]();
+      inspectingFunctionMap[choice]();
    }
+
+   cout<<"***Exiting from Inspection Mode***"<<endl;
 
  
 }

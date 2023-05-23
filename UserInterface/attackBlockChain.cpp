@@ -13,43 +13,50 @@ Transaction attackedTransaction ;
 bool doExit = false ;
 
 // Function type definition
-typedef std::function<void()> VoidFunction;
-map<int, VoidFunction> functionMap;
+typedef function<void()> VoidFunction;
+map<int, VoidFunction> attackingFunctionMap;
 
 
 
 void ChangeSenderPublicKey()
 {
-   cout<<"X : \n"<<endl;
+   cout<<"X : ";
    cin>>attackedTransaction.PublicKeyOfSenderWallet.first;
-   cout<<"Y : \n"<<endl;
+   cout<<"\n";
+   cout<<"Y : ";
    cin>>attackedTransaction.PublicKeyOfSenderWallet.second;
+   cout<<"\n";
+
 }
 
 void ChangeRecieverPublicKey()
 {
-   cout<<"X : \n"<<endl;
+   cout<<"X : ";
    cin>>attackedTransaction.PublicKeyOfRecieverWallet.first;
-   cout<<"Y : \n"<<endl;
+   cout<<"\n";
+
+   cout<<"Y : ";
    cin>>attackedTransaction.PublicKeyOfRecieverWallet.second;
+   cout<<"\n";
+
 }
 
 void ChangeSenderPrivateKey()
 {
-   cout<<"Enter new signature : \n"<<endl;
+   cout<<"Enter new signature : ";
    cin>>attackedTransaction.Signature;
+   cout<<"\n";
+
 }
 
 void ChangeSentAmout()
 {
-   cout<<"Amount : \n"<<endl;
+   cout<<"Amount : ";
    cin>>attackedTransaction.AmountSent;
+   cout<<"\n";
+
 }
 
-void Exit()
-{
-   doExit=true;
-}
 
 
 void attackChain(Blockchain myChain)
@@ -88,8 +95,10 @@ void attackChain(Blockchain myChain)
     try
     {
 
-     cout<<"Enter the index(starting from 1) of valid Transaction in the block you want access to : \n"<<endl;
+     cout<<"Enter the index(starting from 1) of valid Transaction in the block you want access to : ";
      cin>>TxIndex;
+     cout<<"\n";
+
 
      attackedTransaction=attackedBlock.getTransaction(TxIndex);
 
@@ -102,10 +111,10 @@ void attackChain(Blockchain myChain)
     
    }
    
-   functionMap[1]=ChangeSenderPublicKey;
-   functionMap[2]=ChangeRecieverPublicKey;
-   functionMap[3]=ChangeSenderPrivateKey;
-   functionMap[4]=ChangeSentAmout;
+   attackingFunctionMap[1]=ChangeSenderPublicKey;
+   attackingFunctionMap[2]=ChangeRecieverPublicKey;
+   attackingFunctionMap[3]=ChangeSenderPrivateKey;
+   attackingFunctionMap[4]=ChangeSentAmout;
 
 
    while(!doExit)
@@ -127,12 +136,14 @@ void attackChain(Blockchain myChain)
       
       if(choice==5)break;
 
-      functionMap[choice]();
+      attackingFunctionMap[choice]();
    }
 
    myChain.setBlock(blockIndex,attackedBlock,TxIndex,attackedTransaction);
 
    printBlockChain(myChain);
+
+   cout<<"\n***Exiting from Attack Mode***"<<endl;
 
 
 }

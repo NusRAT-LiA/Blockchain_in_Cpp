@@ -36,7 +36,7 @@ class Transaction
             this->AmountSent = Amount;
             this->Signature = Sign;
             this->TxFee=offeredFee;
-
+            this->TxIndexInBlock=0;
             this->CalculateHash();
         }
 

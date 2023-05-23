@@ -99,10 +99,10 @@ class Miner {
 
     Block mineBlock(Block block)
     { 
-      cout<<"Valid block hash has to have "<<block.difficulty<<" 0s on front"<<endl;sleep(1);
-      cout<<"Nonce(Number used only once) combined with blokc's information , is used to generate valid block hash"<<endl;sleep(2);
+      cout<<"Valid block hash has to have "<<block.difficulty<<" 0s on front\n"<<endl;sleep(2);
+      cout<<"Nonce(Number used only once) combined with blokc's information , is used to generate valid block hash\n"<<endl;sleep(2);
 
-      cout<<"Miner performing computational work to find out the for the block nonce"<<endl;sleep(2);
+      cout<<"Miner performing computational work to find out the for the block nonce\n"<<endl;sleep(2);
       int target=block.difficulty;
       unsigned int nonce=0;// initialize nonce with 0
 
@@ -120,7 +120,7 @@ class Miner {
 
          if(validateNonce(CandidateHash,block.difficulty)) // verify whether hash with choosen nonce and timestamp is valid
          { 
-          cout<<"Nonce found !"<<endl;
+          cout<<"! Nonce found !\n"<<endl;
           // update block with valid nonce and timestamp
           block.nonce=nonce;
           block.timestamp=time;
@@ -130,6 +130,7 @@ class Miner {
 
          nonce++;
       }
+      
     }
 
 
