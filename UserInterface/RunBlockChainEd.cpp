@@ -42,6 +42,8 @@ void inspectChain()
 }
 int main()
 {  
+
+  
   cout<<"\n\t\t\tWelcome to BlockChainEd!\t\t\t\n"<<endl;
 
    functionMap[1]=createChain;

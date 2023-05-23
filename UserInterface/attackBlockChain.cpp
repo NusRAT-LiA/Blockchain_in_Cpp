@@ -10,7 +10,7 @@ using namespace std ;
 
 Block attackedBlock;
 Transaction attackedTransaction ;
-bool doExit = false ;
+
 
 // Function type definition
 typedef function<void()> VoidFunction;
@@ -82,6 +82,7 @@ void attackChain(Blockchain myChain)
       cout<<"No Block Found ! Try again !\n"<<endl;
     }
 
+
    }
     
      
@@ -117,7 +118,7 @@ void attackChain(Blockchain myChain)
    attackingFunctionMap[4]=ChangeSentAmout;
 
 
-   while(!doExit)
+   while(true)
    {  
       int choice ;
       cout<<"Choose from options : \n"<<endl;
@@ -127,6 +128,8 @@ void attackChain(Blockchain myChain)
       cout<<"4 . Change sentAmout\n"<<endl;
       cout<<"5 . Exit \n"<<endl;
       cin>>choice;
+      
+      if(choice==5)break;
 
       if(choice>5 || choice<1)
       {
@@ -134,8 +137,7 @@ void attackChain(Blockchain myChain)
          continue;
       }
       
-      if(choice==5)break;
-
+      
       attackingFunctionMap[choice]();
    }
 
@@ -143,7 +145,7 @@ void attackChain(Blockchain myChain)
 
    printBlockChain(myChain);
 
-   cout<<"\n***Exiting from Attack Mode***"<<endl;
+   cout<<"\n***Exiting from Attack Mode***\n"<<endl;
 
 
 }

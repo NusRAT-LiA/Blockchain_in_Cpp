@@ -83,7 +83,10 @@ public:
        newTransaction.CalculateHash();
        this->transactions[index-1]=newTransaction;
        
-       this->calculateHash();
+       this->hash=this->calculateHash();
+       cout<<"Block-"<<this->index<<" 's hash changed to -> "<<this->hash<<endl;sleep(2);
+       
+
     }
 
 

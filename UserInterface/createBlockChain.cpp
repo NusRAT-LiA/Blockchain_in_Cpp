@@ -204,7 +204,7 @@ Blockchain createBlockChain()
    }
     
    
-   cout<<"***Exiting from BlockChain Creation Mode***"<<endl;sleep(1);
+   cout<<"\n***Exiting from BlockChain Creation Mode***\n"<<endl;sleep(1);
    return myChain;
 
 }

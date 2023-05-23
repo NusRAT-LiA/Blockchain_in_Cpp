@@ -41,7 +41,8 @@ class Miner {
     // Function to verify transactions in a block
     Block verifyTransactions(Block block, map<pair<long long int, long long int>, Wallet> KeyMap)
      {
-
+       
+       int TxIndex = 0 ;
        for (auto it = block.transactions.begin(); it != block.transactions.end();) {
         Transaction& transaction = *it; // Get a reference to the current transaction
         
@@ -87,7 +88,8 @@ class Miner {
             it = block.transactions.erase(it); // Remove the transaction and update the iterator
             continue;
         }
-
+        
+        (*it).TxIndexInBlock=++TxIndex;
         cout << "Transaction: " << transaction.TxHash << " verified!" << endl;
         sleep(1);
         ++it; // Move to the next transaction
@@ -102,7 +104,7 @@ class Miner {
       cout<<"Valid block hash has to have "<<block.difficulty<<" 0s on front\n"<<endl;sleep(2);
       cout<<"Nonce(Number used only once) combined with blokc's information , is used to generate valid block hash\n"<<endl;sleep(2);
 
-      cout<<"Miner performing computational work to find out the for the block nonce\n"<<endl;sleep(2);
+      cout<<"Miner performing computational work to find the block nonce\n"<<endl;sleep(2);
       int target=block.difficulty;
       unsigned int nonce=0;// initialize nonce with 0
 

@@ -46,7 +46,7 @@ void printBlockChain(Blockchain myChain)
       if(block.hash.substr(0,myChain.difficulty)!=validPrefix)
       {
        cout<<"^\n|\nX\n|\nInvalid block detected ! Connection broke !\n|\nX\n|\n"<<endl;
-      
+        printBlock(block);
       } 
       else
       {

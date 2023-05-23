@@ -101,12 +101,11 @@ public:
 
       cout<<"\nMiner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;sleep(2);
 
-      int TxIndex = 0 ;
+      
       while(numOfCollectedTx--)
       { 
         if(this->pendingTransactions.size()==0)break;
         Transaction tx = this->pendingTransactions.back();
-        tx.TxIndexInBlock= ++TxIndex;
         CollecttedTx.push_back(tx);
         this->pendingTransactions.pop_back();
       }
@@ -122,7 +121,7 @@ public:
       Block Newblock = miner.createBlock(CollecttedTx,this->blocks.back().hash,this->difficulty);
       Newblock.index=this->blocks.size();
       
-      cout<<"\nMiner ID"<<miner.getId()<<"  started verifying block's transactions..."<<endl;sleep(2);
+      cout<<"\nMiner ID-"<<miner.getId()<<"  started verifying block's transactions..."<<endl;sleep(2);
       Newblock = miner.verifyTransactions(Newblock,this->KeyMap);
       cout<<"\nMiner ID"<<miner.getId()<<" started mining block"<<endl;sleep(2);
       if(Newblock.transactions.size()==0)
@@ -183,12 +182,15 @@ public:
     {
        newBlock.setTransaction(TxIndex,Tx);
        this->blocks[blockIndex]=newBlock;
-       
+       if(this->blocks.size()==1)return;
+
        int i=blockIndex+1;
        while (i<this->blocks.size())
        {  
           this->blocks[i].previousHash=this->blocks[i-1].hash;
           this->blocks[i].hash=this->blocks[i].calculateHash();
+          cout<<"Block-"<<i<<" 's hash changed to -> "<<this->blocks[i].hash<<endl;sleep(2);
+
           i++;
        }
        

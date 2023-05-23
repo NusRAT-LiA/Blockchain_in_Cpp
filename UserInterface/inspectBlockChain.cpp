@@ -16,7 +16,13 @@ int inspectBlockInIndex;
 
 
 void getWallets()
-{
+{ 
+  if(BlockChain.Wallets.size()==0)
+  {
+    cout<<"No wallets found in Chain !"<<endl;
+    return;
+  } 
+
   for(auto i : BlockChain.Wallets)
   {
     cout<<"Wallet's  Address     : "<<i.WalletAdress<<endl;
@@ -27,7 +33,12 @@ void getWallets()
 }
 
 void getTransactions()
-{
+{  
+   if(BlockChain.addedTransactions.size()==0)
+  {
+    cout<<"No Transations found in Chain !"<<endl;
+    return;
+  } 
    for(auto i : BlockChain.addedTransactions)
     { 
       cout<<"| TransactionHash   -> "<<i.TxHash<<endl;
@@ -90,7 +101,7 @@ void inspectMyChain(Blockchain myChain)
       inspectingFunctionMap[choice]();
    }
 
-   cout<<"***Exiting from Inspection Mode***"<<endl;
+   cout<<"\n***Exiting from Inspection Mode***\n"<<endl;
 
  
 }
