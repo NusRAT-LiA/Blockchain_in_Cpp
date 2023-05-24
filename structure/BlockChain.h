@@ -99,7 +99,7 @@ public:
       vector<Transaction> CollecttedTx;
       int numOfCollectedTx=3;
 
-      cout<<"\nMiner ID"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;sleep(2);
+      cout<<"\nMiner ID-"<<miner.getId()<<" Collecting Transactions from the network with higher fees "<<endl;sleep(2);
 
       
       while(numOfCollectedTx--)
