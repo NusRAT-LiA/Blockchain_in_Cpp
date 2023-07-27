@@ -31,30 +31,27 @@ Follow these step-by-step instructions to obtain and run the BlockChainEd applic
    ```bash
    git clone https://github.com/NusRAT-LiA/Blockchain_in_Cpp-SPL-1
    ```
-4.**Compile the RunBlockChainEd.cpp File:**
-  - Open your terminal or command prompt and navigate to the "UserInterface" directory where the RunBlockChainEd.cpp file is located.
-  - Compile the RunBlockChainEd.cpp file using the C++ compiler with the following command:
+4. **Compile the RunBlockChainEd.cpp File:**
+   - Open your terminal or command prompt and navigate to the "UserInterface" directory where the RunBlockChainEd.cpp file is located.
+   - Compile the RunBlockChainEd.cpp file using the C++ compiler with the following command:
     
   ```bash
   g++ RunBlockChainEd.cpp -o BlockChainEd
    ```
-5.**Run BlockChainEd Application:**
-  - Execute the compiled application by running the following command:
+5. **Run BlockChainEd Application:**
+   - Execute the compiled application by running the following command:
     
   ```bash
  ./BlockChainEd
    ```
-6.**Select Options:**
-  - The application will present a menu of options. Select the desired option by entering the corresponding number.
+6. **Select Options:**
+   - The application will present a menu of options. Select the desired option by entering the corresponding number.
 
-7.**Follow the Instructions:**
-  - Based on your choice, the application will guide you through creating wallets, generating transactions, appointing miners, mining blocks, and inspecting elements of the blockchain.
+7. **Follow the Instructions:**
+   - Based on your choice, the application will guide you through creating wallets, generating transactions, appointing miners, mining blocks, and inspecting elements of the blockchain.
 
 
 ## Detailed Resources :
+[BlockChainED-Paper.pdf](https://github.com/NusRAT-LiA/Blockchain_in_Cpp/files/12185116/BlockChainED-Paper.pdf)
+[BlockChainEd-Presentation.pdf](https://github.com/NusRAT-LiA/Blockchain_in_Cpp/files/12185125/BlockChainEd-Presentation.pdf)
 
-
-
-
-
-[SPL1 Template-BlockChainED-1306.pdf](https://github.com/NusRAT-LiA/Blockchain_in_Cpp/files/12184700/SPL1.Template-BlockChainED-1306.pdf)
